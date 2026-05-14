@@ -23,16 +23,12 @@ Reads from `.docs-driven/config.json` under `adapters.documentation.config`:
 
 ## Filename generation
 
-Slugs are created from the title: lowercase, replace non-alphanumeric
-characters with hyphens, collapse consecutive hyphens, trim leading
-and trailing hyphens.
+Slugs are created from the title: lowercase, replace non-alphanumeric characters with hyphens, collapse consecutive hyphens, trim leading and trailing hyphens.
 
-Filenames use a date prefix from `metadata.date` (ISO 8601 date part),
-or today's date if not set:
+Filenames use a date prefix from `metadata.date` (ISO 8601 date part), or today's date if not set:
 
 - **ADRs** (`type: adr`, no `docType`): `{YYYY-MM-DD}-{slug}.md`
-- **Code explorations** (`type: adr`, `metadata.docType: "code-exploration"`):
-  `{YYYY-MM-DD}-CE-{slug}.md`
+- **Code explorations** (`type: adr`, `metadata.docType: "code-exploration"`): `{YYYY-MM-DD}-CE-{slug}.md`
 - **Pitches** (`type: pitch`): `{slug}.md`
 
 ## Publish instructions

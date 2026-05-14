@@ -7,18 +7,13 @@ Adapters abstract the destination for published content. There are two types:
 
 ## Contract
 
-Skills pass content to adapters using the shared contract defined in
-[contract.md](contract.md). All adapters accept the same input fields and
-return the published location.
+Skills pass content to adapters using the shared contract defined in [contract.md](contract.md). All adapters accept the same input fields and return the published location.
 
 ## How it works
 
-1. A skill reads `.docs-driven/config.json` to find the configured adapter type
-   (e.g. `documentation.type: "local"`).
-2. The skill reads the corresponding adapter file (e.g.
-   `shared/adapters/documentation/local.md`) for publish instructions.
-3. The agent constructs the content using the [contract fields](contract.md)
-   and follows the adapter's instructions to publish.
+1. A skill reads `.docs-driven/config.json` to find the configured adapter type (e.g. `documentation.type: "local"`).
+2. The skill reads the corresponding adapter file (e.g. `shared/adapters/documentation/local.md`) for publish instructions.
+3. The agent constructs the content using the [contract fields](contract.md) and follows the adapter's instructions to publish.
 4. The adapter returns the published location (path, URL, or identifier).
 
 ## Configuration

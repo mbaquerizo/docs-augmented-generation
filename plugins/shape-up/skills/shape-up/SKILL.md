@@ -126,9 +126,7 @@ Present the full pitch draft to the user. Call out:
 
 ## 8. Publish
 
-Publish the pitch using the documentation adapter. Follow the adapter
-instructions in `plugins/shared/adapters/documentation/` and the contract
-in `plugins/shared/adapters/contract.md`.
+Publish the pitch using the documentation adapter. Follow the adapter instructions in `plugins/shared/adapters/documentation/` and the contract in `plugins/shared/adapters/contract.md`.
 
 The adapter instructions end with "Return the output path" — capture it.
 

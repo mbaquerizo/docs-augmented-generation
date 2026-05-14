@@ -28,9 +28,7 @@ Reads from `.docs-driven/config.json` under `adapters.issue-tracking.config`:
 
 ## ID and filename generation
 
-Slugs are created from the title: lowercase, replace non-alphanumeric
-characters with hyphens, collapse consecutive hyphens, trim leading
-and trailing hyphens.
+Slugs are created from the title: lowercase, replace non-alphanumeric characters with hyphens, collapse consecutive hyphens, trim leading and trailing hyphens.
 
 1. Scan `ticketPath` for existing files matching `{project}-\d+-*.md`
 2. Find the highest existing ID number, increment by 1 (start at 1 if none)
@@ -57,9 +55,7 @@ and trailing hyphens.
 
 ## Updates
 
-When updating an existing ticket (e.g. status change), the skill passes the
-known `filename` or the adapter looks it up by ID. The adapter rewrites the
-file in place at the same path.
+When updating an existing ticket (e.g. status change), the skill passes the known `filename` or the adapter looks it up by ID. The adapter rewrites the file in place at the same path.
 
 ## Example
 

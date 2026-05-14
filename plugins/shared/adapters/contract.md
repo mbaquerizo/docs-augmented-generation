@@ -1,7 +1,6 @@
 # Publish contract
 
-Skills provide structured content. Adapters transform it for their destination
-and return the published location.
+Skills provide structured content. Adapters transform it for their destination and return the published location.
 
 ## Input
 
@@ -20,16 +19,11 @@ The adapter returns the published location as a string:
 - **Local adapters**: filesystem path relative to project root
 - **Cloud adapters**: URL to the published page or issue
 
-The skill uses this return value for display to the user and for passing to
-downstream skills.
+The skill uses this return value for display to the user and for passing to downstream skills.
 
 ## Filename generation
 
-Adapters generate filenames automatically. The skill does not control the
-filename — the adapter owns document organization within its destination.
+Adapters generate filenames automatically. The skill does not control the filename — the adapter owns document organization within its destination.
 
-- **Documentation adapters**: generate filenames from `type`, `title`,
-  and `metadata.date`. ADRs and code explorations get a date-prefixed
-  filename; pitches are slug-only.
-- **Issue-tracking adapters**: generate filenames from `project` prefix,
-  auto-incrementing ID, and `title` slug
+- **Documentation adapters**: generate filenames from `type`, `title`, and `metadata.date`. ADRs and code explorations get a date-prefixed filename; pitches are slug-only.
+- **Issue-tracking adapters**: generate filenames from `project` prefix, auto-incrementing ID, and `title` slug
