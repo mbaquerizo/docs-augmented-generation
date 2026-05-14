@@ -1,8 +1,6 @@
 ---
 name: finish-work
 description: Stage and commit any uncommitted work, sync, push, and create or update a pull request. Use when I ask to create a PR or invoke the skill directly.
-allowed-tools: Bash(gh *)
-model: haiku
 ---
 
 ## Context

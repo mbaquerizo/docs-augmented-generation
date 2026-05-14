@@ -2,8 +2,6 @@
 name: create-tickets
 description: Suggest ticket hierarchy for planned feature and publish tickets to user's preferred issue tracker.
 argument-hint: "[feature description?]"
-disable-model-invocation: true
-model: sonnet
 ---
 
 If we just planned a feature using the /plan-feature skill, use that as input. Otherwise use arguments: $ARGUMENTS, or if none provided, ask me what I want to create tickets for.

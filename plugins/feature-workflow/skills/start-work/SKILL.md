@@ -6,7 +6,7 @@ argument-hint: "[ticket number]"
 
 Retrieve the ticket and any supporting documentation
 
-model check: if simple task, sonnet. More complicated -> opus. Check current model and if not aligned with recommended, report to user, stop, and allow them to either switch or keep before continuing.
+complexity check: if simple task, use a lightweight/fast model. More complicated -> use a deeper reasoning model. If the current model's capability does not match the recommended complexity, report to the user, stop, and allow them to either switch or keep before continuing.
 
 Assume branching from the default branch (usually `main`) unless the user specifies otherwise.
 

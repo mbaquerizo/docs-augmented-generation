@@ -1,8 +1,6 @@
 ---
 name: commit
 description: Stage and commit the current changes. Use when I ask to commit or I invoke the skill directly, or when invoked by the finish-work skill.
-allowed-tools: Bash(git add *) Bash(git commit *) Bash(git status *)
-model: haiku
 ---
 
 ## 1. Current changes
