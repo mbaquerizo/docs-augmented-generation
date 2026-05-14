@@ -3,14 +3,14 @@
     "documentation": {
       "type": "local",
       "config": {
-        "adrPath": "./docs/adr",
-        "pitchPath": "./docs/pitches"
+        "adrPath": "./.planning/adr",
+        "pitchPath": "./.planning/pitches"
       }
     },
     "issue-tracking": {
       "type": "local",
       "config": {
-        "ticketPath": "./docs/tickets"
+        "ticketPath": "./.planning/tickets"
       }
     }
   }
