@@ -67,23 +67,26 @@ Ask for approval before publishing. Allow revisions.
 ## 7. Publish
 
 Publish using the documentation adapter with a shared `parent` value so
-both documents are grouped together:
+both documents are grouped together. Follow the adapter instructions in
+`plugins/shared/adapters/documentation/` and the contract in
+`plugins/shared/adapters/contract.md`.
+
+The adapter instructions end with "Return the output path" — capture it
+for each document published.
 
 1. Determine a parent identifier: `{timestamp}-{feature-slug}` (e.g. `2026-05-14-add-user-auth`)
 2. Publish the code exploration doc first:
    - `type`: `adr`, `title`: exploration doc title, `body`: findings
    - `parent`: the feature identifier
    - `metadata.docType`: `"code-exploration"`
-3. Update the ADR with the published code exploration link
+   - Capture the returned path
+3. Update the ADR body with the published code exploration path
 4. Publish the ADR:
    - `type`: `adr`, `title`: ADR title, `body`: full ADR with link
    - `parent`: the same feature identifier
    - (no `docType` — defaults to ADR naming)
-
-Both documents land in the same parent directory under `adrPath`.
-
-Follow the adapter instructions in `plugins/shared/adapters/documentation/`
-and the contract in `plugins/shared/adapters/contract.md`.
+   - Capture the returned path
+5. Report both published paths to the user
 
 ## 8. When you are done
 

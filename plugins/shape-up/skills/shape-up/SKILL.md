@@ -126,15 +126,19 @@ Present the full pitch draft to the user. Call out:
 
 ## 8. Publish
 
-Publish the pitch using the documentation adapter:
+Publish the pitch using the documentation adapter. Follow the adapter
+instructions in `plugins/shared/adapters/documentation/` and the contract
+in `plugins/shared/adapters/contract.md`.
+
+The adapter instructions end with "Return the output path" — capture it.
 
 1. Read `.docs-driven/config.json` to find the configured documentation adapter
-2. Read the adapter's publish instructions from `plugins/shared/adapters/documentation/{type}.md`
-3. Construct the publish content using the contract:
+2. Construct the publish content using the contract:
    - `type`: `pitch`
    - `title`: The pitch title (from Section 5)
    - `body`: Full pitch content in markdown
    - `metadata`: object with `status`, `date`, `tags`
+3. Capture the returned path and report it to the user
 
 If any sections are missing or open questions exist, use the placeholder format defined in [pitch-structure.md](pitch-structure.md) (the `When incomplete` note for each section). This keeps the structure navigable while clearly marking what's unfinished. Do NOT silently omit missing sections.
 

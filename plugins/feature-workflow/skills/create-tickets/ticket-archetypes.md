@@ -94,13 +94,13 @@ tags:
 ## Scenarios
 
 ```gherkin
-Scenario: {scenario name}
+Scenario 1: {scenario name}
   Given {precondition}
   When {action}
   Then {expected outcome}
 ```
 
-Add one `Scenario` block per covered case. Omit `Scenario Outline` and `Examples:` — list scenarios flatly.
+Number scenarios sequentially within the Scenarios section. Omit `Scenario Outline` and `Examples:` — list scenarios flatly.
 
 ## Technical notes
 
@@ -113,7 +113,7 @@ Add one `Scenario` block per covered case. Omit `Scenario Outline` and `Examples
 - Parent epic: {link}
 
 ---
-*Created by AI, reviewed by a teammate.*
+*This ticket was created by {model} and reviewed by a human before publishing.*
 ````
 
 ---
@@ -156,7 +156,7 @@ What needs to be done and why. Include any research or context.
 - Code exploration: {link}
 
 ---
-*Created by AI, reviewed by a teammate.*
+*This ticket was created by {model} and reviewed by a human before publishing.*
 ```
 
 ---
@@ -206,7 +206,7 @@ What should happen instead?
 - ADR: {link}
 
 ---
-*Created by AI, reviewed by a teammate.*
+*This ticket was created by {model} and reviewed by a human before publishing.*
 ```
 
 ---
@@ -256,7 +256,7 @@ What will be produced (doc, recommendation, ADR, prototype)?
 - Code exploration: {link}
 
 ---
-*Created by AI, reviewed by a teammate.*
+*This ticket was created by {model} and reviewed by a human before publishing.*
 ```
 
 ## Archetype selection guide
@@ -273,4 +273,4 @@ Do not use `subtask` as an issue type. Use parent-child relationships
 (epic → story/task/bug/spike) instead.
 
 ---
-*This reference was created by AI and reviewed by a teammate.*
+*This reference was created by {model} and reviewed by a human before publishing.*

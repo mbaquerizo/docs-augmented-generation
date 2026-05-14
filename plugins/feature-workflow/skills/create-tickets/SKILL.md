@@ -91,30 +91,44 @@ implementation order) would leave the app in a broken state, restructure.
 
 ## 4. Propose tickets
 
-Present the full hierarchy to the user:
+Present the full hierarchy to the user. For each ticket, show the
+drafted markdown using its archetype template so the user can review
+the full content before approving:
 
-- List every ticket with its archetype, title, and relationship notes
+- List every ticket with its archetype, title, acceptance criteria,
+  scenarios, and relationship notes
+- Show each ticket as formatted markdown (the full template output)
 - Explain the rationale for any significant splits or restructuring
 - Ask for approval
 
-Allow revisions to the hierarchy, titles, or descriptions.
+Allow revisions to the hierarchy, titles, descriptions, or any
+ticket detail.
 
 ## 5. Publish
 
-On approval, publish each ticket using the issue-tracking adapter:
+On approval, publish each ticket using the issue-tracking adapter.
+Follow the adapter instructions in `plugins/shared/adapters/issue-tracking/`
+and the contract in `plugins/shared/adapters/contract.md`.
+
+The adapter instructions end with "Return the output path" — capture it
+for each ticket published.
 
 1. Read `.docs-driven/config.json` to find the enabled issue-tracking adapter
-2. Follow the adapter instructions in `plugins/shared/adapters/issue-tracking/`
-   and the contract in `plugins/shared/adapters/contract.md`
-3. Publish each ticket individually:
+2. Publish each ticket individually:
    - `type`: `ticket`
    - `title`: ticket title
-   - `body`: full ticket description including acceptance criteria, technical
-     notes, and links to planning documents
+   - `body`: full ticket description including acceptance criteria,
+     scenarios, technical notes, and links to planning documents.
+     Replace `{model}` in the footer with the current tool name
+     (e.g. "Claude Code", "opencode")
    - `metadata.issueType`: the archetype (`epic`, `story`, `task`, `bug`, `spike`)
    - `metadata.status`: `open`
    - `metadata.tags`: relevant tags from planning
-4. Report the published location (ID and path) for each ticket
+   - Capture the returned path
+3. After all tickets are published, present a summary table:
+   ```
+   {ID}  {archetype}  {title}  →  {published path}
+   ```
 
 ## 6. When you are done
 
