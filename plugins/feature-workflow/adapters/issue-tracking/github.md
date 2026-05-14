@@ -1,1 +1,0 @@
-<!-- Insert instructions for publishing issues to Github Issues. -->
