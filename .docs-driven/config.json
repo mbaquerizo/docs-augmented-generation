@@ -10,6 +10,7 @@
     "issue-tracking": {
       "type": "local",
       "config": {
+        "project": "PROJ",
         "ticketPath": "./.planning/tickets"
       }
     }

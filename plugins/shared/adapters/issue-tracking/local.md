@@ -8,7 +8,7 @@ Reads from `.docs-driven/config.json` under `adapters.issue-tracking.config`:
 
 | Field | Required | Default | Description |
 |-------|----------|---------|-------------|
-| `project` | yes | — | Project key used as the ID prefix (e.g. `UI` produces IDs like `UI-42`) |
+| `project` | yes | — | Issue-tracking project identifier. Used as the ticket ID prefix (e.g. `UI` produces IDs like `UI-42`) |
 | `ticketPath` | no | `./docs/tickets` | Destination directory for tickets |
 
 ## Contract mapping

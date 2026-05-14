@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "adapters": {
+      "type": "object",
+      "properties": {
+        "documentation": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["local"]
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "adrPath": { "type": "string" },
+                "pitchPath": { "type": "string" }
+              }
+            }
+          },
+          "required": ["type"]
+        },
+        "issue-tracking": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["local"]
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "project": {
+                  "type": "string",
+                  "description": "Issue-tracking project identifier (e.g. Jira project key, Linear team key). Used as the ticket ID prefix."
+                },
+                "ticketPath": { "type": "string" }
+              },
+              "required": ["project"]
+            }
+          },
+          "required": ["type"]
+        }
+      }
+    }
+  },
+  "required": ["adapters"]
+}
