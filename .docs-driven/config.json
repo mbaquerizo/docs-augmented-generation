@@ -1,0 +1,17 @@
+{
+  "adapters": {
+    "documentation": {
+      "type": "local",
+      "config": {
+        "adrPath": "./docs/adr",
+        "pitchPath": "./docs/pitches"
+      }
+    },
+    "issue-tracking": {
+      "type": "local",
+      "config": {
+        "ticketPath": "./docs/tickets"
+      }
+    }
+  }
+}
