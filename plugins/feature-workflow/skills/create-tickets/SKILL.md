@@ -1,62 +1,121 @@
 ---
 name: create-tickets
-description: Suggest ticket hierarchy for planned feature and publish tickets to user's preferred issue tracker.
-argument-hint: "[feature description?]"
+description: Suggest ticket hierarchy for planned feature and publish tickets to the configured issue tracker.
+argument-hint: "[feature description]"
 ---
 
-If we just planned a feature using the /plan-feature skill, use that as input. Otherwise use arguments: $ARGUMENTS, or if none provided, ask me what I want to create tickets for.
+## 1. Input
 
-## Determine ticket hierarchy
+If we just planned a feature using the `/plan-feature` skill, use the resulting
+ADR and code exploration as input. Otherwise use the provided arguments. If
+neither is available, ask what feature to create tickets for.
 
-Draft a ticket or group of tickets, based on the following ticket archetypes: epic, story, task, bug, spike. Do not use subtask types. Note blocking or other relationships between proposed tickets
+Read any linked ADR, code exploration, or feature plan documents to understand
+the scope, architecture decisions, and implementation approach.
 
-<!--
-insert ticket types, when to use, or link to a supporting document or sibling skill (issue-creation)
-the supporting document should include:
-- format/template for each type
-  - template should include links to any relevant docs (e.g. ADR, code exploration, feature plan) produced during planning stages
-  - template should include a message at bottom saying this was created by AI and reviewed by a teammate
--->
+## 2. Determine ticket hierarchy
 
-Each ticket should be a logical, PR-sized (~15 minute review by engineer) unit. Before showing me your suggested hierarchy, use the following checks to determine if any ticket or tickets are too large, and revise the proposal accordingly.
+Use the archetypes in [ticket-archetypes.md](ticket-archetypes.md) to draft
+a group of tickets:
 
-### Verb Check:
-Count verbs in the suggested ticket name, if more than one, this may need be split if each verb can be split into a logical unit.
-<!-- insert examples -->
+- Start with a single **epic** that groups all work for this feature
+- Break the epic into **stories** (user-valuable, PR-sized units)
+- Add **tasks** for technical/operational work
+- Add **bugs** if the feature fixes existing defects
+- Add **spikes** if any implementation details need investigation
 
-### Break Check
-Ensure that tickets will not introduce any breaking changes. If a blocking ticket resolves the break, this is a failure. Restructure the tickets so that upstream changes are not breaking.
+Each ticket should be PR-sized (~15 minute review). Note blocking or other
+relationships between tickets (e.g. "blocked by", "related to").
 
-<!-- iron out following example -->
+## 3. Validate
 
+### Verb check
+
+For each ticket (excluding epics and spikes), examine the title:
+
+1. Count the verbs in the ticket title
+2. If there is more than one verb AND each verb could form a logical unit on
+   its own, split the ticket
+
+**Examples**:
+
+| Title | Verbs | Verdict |
+|-------|-------|---------|
+| Add user login endpoint | 1 (add) | OK |
+| Create database schema and migrate data | 2 (create, migrate) | Split |
+| Add user login and update profile page | 2 (add, update) | Split |
+| Implement search with filters | 1 (implement) | OK |
+| Set up CI pipeline and configure deployment | 2 (set up, configure) | Split |
+| Replace schema, update APIs, and update UI | 3 (replace, update, update) | Split |
+
+When splitting, ensure each resulting ticket is independently valuable where
+possible.
+
+### Break check
+
+Ensure that no single ticket introduces a breaking change. If a ticket would
+break existing functionality, and a downstream ticket resolves the break, the
+grouping is wrong — restructure so upstream changes are never breaking at any
+point.
+
+**Example**:
+
+```
 Ticket A: Replace Schema
 Ticket B: Update APIs to use new schema shape (blocked by A)
-Ticket C: Update UI to use new API shape (blocked by C)
+Ticket C: Update UI to use new API shape (blocked by B)
+```
 
 Check:
-Ticket A: Breaks
-Ticket A + B: Fixes API but breaks UI
-Tickat A + B + C: Fixed, but too late because app broken between Ticket A implementation and now
+- Ticket A alone: Break — old API consumers will fail
+- Ticket A + B: Still broken — old UI consumers will fail
+- Ticket A + B + C: Fixed, but too late — app is broken between A and B+C
 
-Potential Fix:
-Ticket A: Add new schema
-Ticket B: Add new API using new schema (blocked by A)
+**Restructured**:
+
+```
+Ticket A: Add new schema (non-breaking addition)
+Ticket B: Add new API using new schema (blocked by A, still unused)
 Ticket C: Replace old API in UI with new API (blocked by B)
-Ticket D: (optional) Clean up old schema/api (blocked by C)
+Ticket D: Clean up old schema and API (blocked by C, optional)
+```
 
 Check:
-Ticket A: OK, new schema introduced, unused
-Ticket A + B: OK, new API still unused
-Ticket A + B + C: OK, using new API and 
+- Ticket A: OK — new schema added, nothing uses it yet
+- Ticket A + B: OK — new API exists, still unused
+- Ticket A + B + C: OK — UI uses new API, old API and schema still exist
+- With D: Cleanup — old code removed, all consumers have migrated
 
-## Propose tickets
+Apply this pattern to your ticket hierarchy. If any sequence of tickets (in
+implementation order) would leave the app in a broken state, restructure.
 
-Once all checks are complete, show them to me for my approval
+## 4. Propose tickets
 
-## Publish
+Present the full hierarchy to the user:
 
-On my approval, publish the tickets with any relevant tags.
+- List every ticket with its archetype, title, and relationship notes
+- Explain the rationale for any significant splits or restructuring
+- Ask for approval
 
-## When you are done
+Allow revisions to the hierarchy, titles, or descriptions.
+
+## 5. Publish
+
+On approval, publish each ticket using the issue-tracking adapter:
+
+1. Read `.docs-driven/config.json` to find the enabled issue-tracking adapter
+2. Follow the adapter instructions in `plugins/shared/adapters/issue-tracking/`
+   and the contract in `plugins/shared/adapters/contract.md`
+3. Publish each ticket individually:
+   - `type`: `ticket`
+   - `title`: ticket title
+   - `body`: full ticket description including acceptance criteria, technical
+     notes, and links to planning documents
+   - `metadata.issueType`: the archetype (`epic`, `story`, `task`, `bug`, `spike`)
+   - `metadata.status`: `open`
+   - `metadata.tags`: relevant tags from planning
+4. Report the published location (ID and path) for each ticket
+
+## 6. When you are done
 
 Do not make any code changes; do not start working on any of the tickets.
