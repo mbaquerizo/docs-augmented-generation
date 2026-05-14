@@ -1,0 +1,49 @@
+{
+  "name": "docs-driven-plugins",
+  "owner": {
+    "name": "Matthew Baquerizo",
+    "email": "matthew.baquerizo@pm.me"
+  },
+  "plugins": [
+    {
+      "name": "feature-workflow",
+      "source": "feature-workflow",
+      "description": "End-to-end feature specification and code generation pipeline",
+      "version": "0.1.0",
+      "author": {
+        "name": "Matthew Baquerizo"
+      }
+    },
+    {
+      "name": "pair-programming",
+      "source": "pair-programming",
+      "description": "Pair programming utility for codebase familiarization and interactive pair programming, with Claude as navigator",
+      "version": "0.1.0",
+      "author": {
+        "name": "Matthew Baquerizo"
+      }
+    },
+    {
+      "name": "shape-up",
+      "source": "shape-up",
+      "description": "Shape Up methodology pitch generation",
+      "version": "0.1.0",
+      "author": {
+        "name": "Matthew Baquerizo"
+      }
+    },
+    {
+      "name": "tdd",
+      "source": "tdd",
+      "description": "Test Driven Development skill",
+      "version": "0.1.0",
+      "author": {
+        "name": "Matthew Baquerizo"
+      }
+    }
+  ],
+  "version": "0.1.0",
+  "metadata": {
+    "pluginRoot": "./plugins"
+  }
+}
