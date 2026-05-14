@@ -5,14 +5,21 @@ Adapters abstract the destination for published content. There are two types:
 - **documentation** — for ADRs, pitches, and code explorations
 - **issue-tracking** — for tickets (epics, stories, tasks, bugs, spikes)
 
+## Contract
+
+Skills pass content to adapters using the shared contract defined in
+[contract.md](contract.md). All adapters accept the same input fields and
+return the published location.
+
 ## How it works
 
-1. A skill needs to publish something. It reads `.docs-driven/config.json` to find the
-   configured adapter type (e.g. `documentation.type: "local"`).
+1. A skill reads `.docs-driven/config.json` to find the configured adapter type
+   (e.g. `documentation.type: "local"`).
 2. The skill reads the corresponding adapter file (e.g.
-   `shared/adapters/documentation/local.md`) which provides publish instructions.
-3. The agent follows those instructions, using the `config` fields from
-   `.docs-driven/config.json` as destination parameters.
+   `shared/adapters/documentation/local.md`) for publish instructions.
+3. The agent constructs the content using the [contract fields](contract.md)
+   and follows the adapter's instructions to publish.
+4. The adapter returns the published location (path, URL, or identifier).
 
 ## Configuration
 
