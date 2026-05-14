@@ -1,6 +1,6 @@
 ---
 name: start-work
-description: Set up a code generation session from an existing ticket. Creates a worktree, assesses complexity, plans the approach, and implements on approval.
+description: Set up a code generation session from an existing ticket. Creates a worktree, assesses complexity, plans the approach, and implements on approval with optional TDD-first workflow.
 argument-hint: "[ticket number]"
 ---
 
@@ -60,7 +60,27 @@ Once the plan is approved, set up the working environment:
 
 ## 8. Implementation
 
-Implement per the approved plan.
+### 8.1 Detect TDD skill
+
+Try to load the **tdd** skill via the `skill` tool. If the tool fails or the skill is unavailable, fall back to checking whether the file exists at `plugins/tdd/skills/tdd/SKILL.md`. If neither succeeds, TDD is not available.
+
+If TDD was set to always-on mode and the detection fails, warn the user and proceed without it.
+
+### 8.2 TDD available — test-first implementation
+
+1. Load the **tdd** skill with the feature ticket's acceptance criteria in context
+2. Establish the contract: agree on test framework, runner, assertion style, and test file location
+3. Write a failing test for the first behavior (TDD red step) — this is done **before** any production code
+4. Implement the minimum production code to pass (green)
+5. Run the test suite to confirm nothing regressed
+6. Refactor if needed
+7. Repeat for each behavior in the acceptance criteria
+
+After all behaviors are implemented, proceed to test verification (section 9).
+
+### 8.3 TDD not available — direct implementation
+
+Implement per the approved plan directly, without test-first requirements.
 
 ## 9. Test verification
 
