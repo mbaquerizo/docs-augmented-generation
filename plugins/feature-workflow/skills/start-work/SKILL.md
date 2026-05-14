@@ -1,26 +1,89 @@
 ---
 name: start-work
-description: Code generation
+description: Set up a code generation session from an existing ticket. Creates a worktree, assesses complexity, plans the approach, and implements on approval.
 argument-hint: "[ticket number]"
 ---
 
-Retrieve the ticket and any supporting documentation
+## 1. Mode check
 
-complexity check: if simple task, use a lightweight/fast model. More complicated -> use a deeper reasoning model. If the current model's capability does not match the recommended complexity, report to the user, stop, and allow them to either switch or keep before continuing.
+Check your current operating mode. If you are in Build, Auto, or Accept Edits
+mode, stop and ask the user to switch to Plan mode before continuing. Mode
+switching is a tool-level operation — you cannot perform it yourself.
 
-Assume branching from the default branch (usually `main`) unless the user specifies otherwise.
+## 2. Input
 
-Start a new git worktree. Pull the latest from the base first. Create the issue branch, branch name should be `<issue-type>/<issue-number>/<brief-description>`
+Accept a ticket ID or feature description from arguments ($ARGUMENTS). If no
+ticket ID is provided, ask which ticket to work on.
 
-Start in Plan mode. If further code exploration is needed, go ahead, and then publish results to the ticket description. Propose the plan to the user.
+Read the ticket from the issue-tracking adapter: use the project prefix and
+ID to locate the file in `ticketPath`, then read it.
 
-Compose with the /tdd skill.
-<!-- insert guidance on how to use /tdd, when are tests needed, not needed. ultimately should follow a red -> implement -> green flow -->
+## 3. Update ticket status
 
-On approval of the plan, start the implementation.
+Update the ticket's status from `open` to `in-progress`. Follow the update
+instructions in `plugins/shared/adapters/issue-tracking/` and the contract in
+`plugins/shared/adapters/contract.md`:
 
-Verify that related tests all pass before handing off to the user.
+1. Read the current ticket file
+2. Change `status: open` to `status: in-progress`
+3. Rewrite the file in place
+4. Report the status change to the user
 
-## When you are done
+## 4. Load context
 
-Do not commit or push. Do not work on any other tickets. You may offer to commit and if approved, use the /commit skill.
+Read the ticket body and any linked documents:
+
+- ADRs and code explorations listed in Related docs
+- Feature plans or Shape Up pitches
+- Source files referenced in acceptance criteria or technical notes
+
+## 5. Complexity check
+
+Assess the complexity of the work based on the ticket scope, acceptance
+criteria, and linked documents:
+
+- **Simple** — Few files, well-understood patterns, minimal risk of
+  breaking changes. A lightweight approach is sufficient.
+- **Complex** — Multiple systems, new patterns, significant refactoring,
+  or high risk. Deep reasoning and code exploration are needed.
+
+If the current model's capability (reasoning depth, context window, tool
+access) does not match the recommended complexity, report this to the user.
+Let them decide whether to switch to a more capable model or continue with
+the current one before proceeding.
+
+## 6. Plan
+
+Propose an implementation approach. If the work is complex, invoke the
+**code-exploration** subagent first to investigate the codebase and return
+structured findings.
+
+If code exploration was used, publish the findings document to the ticket
+body so it is preserved for future reference.
+
+Present the plan to the user and ask for approval before proceeding.
+
+## 7. Worktree setup
+
+Once the plan is approved, set up the working environment:
+
+1. `git fetch` the latest from the default branch (usually `main`)
+2. Check existing worktrees with `git worktree list`:
+   - If a worktree already exists for this branch or ticket, use it
+   - Otherwise create a new worktree rooted from the default branch
+3. Branch naming convention: `<issue-type>/<issue-number>/<brief-description>`
+   (e.g. `story/PROJ-42/add-login-endpoint`)
+
+## 8. Implementation
+
+Implement per the approved plan.
+
+## 9. Test verification
+
+Run the relevant test suite. Fix any test failures introduced by the
+implementation. Do not skip failing tests.
+
+## 10. When you are done
+
+Do not commit or push. Offer to commit using `/commit` if the user
+approves. Do not work on any other tickets.
