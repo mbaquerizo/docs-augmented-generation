@@ -18,6 +18,7 @@ Reads from `.docs-driven/config.json` under `adapters.documentation.config`:
 | `type` | Resolves the output directory: `adr` → `adrPath`, `pitch` → `pitchPath` |
 | `title` | File heading (`# {title}`) and slug for filename |
 | `body` | Body content after frontmatter |
+| `parent` | Appended to the output directory as a subdirectory: `{basePath}/{parent}` |
 | `metadata` | Serialized as YAML frontmatter between `---` delimiters |
 
 ## Filename generation
@@ -26,18 +27,22 @@ Slugs are created from the title: lowercase, replace non-alphanumeric
 characters with hyphens, collapse consecutive hyphens, trim leading
 and trailing hyphens.
 
-- **ADRs** (`type: adr`): scan `adrPath` for existing files matching
-  `????-*.md`, find the highest sequential number, increment, zero-pad
-  to 4 digits. Filename: `{NNNN}-{slug}.md`
-- **Pitches** (`type: pitch`): no numbering. Filename: `{slug}.md`
+Filenames use a date prefix from `metadata.date` (ISO 8601 date part),
+or today's date if not set:
+
+- **ADRs** (`type: adr`, no `docType`): `{YYYY-MM-DD}-{slug}.md`
+- **Code explorations** (`type: adr`, `metadata.docType: "code-exploration"`):
+  `{YYYY-MM-DD}-CE-{slug}.md`
+- **Pitches** (`type: pitch`): `{slug}.md`
 
 ## Publish instructions
 
 1. Determine output directory based on `type`: `adr` → `adrPath`, `pitch` → `pitchPath`
-2. Generate filename from `title` and `type` (see above)
-3. Construct full output path: `{directory}/{filename}`
-4. Create parent directories if they don't exist: `mkdir -p "{directory}"`
-5. Write the file in this format:
+2. If `parent` is provided, append it: `{directory}/{parent}`
+3. Generate filename from `title` and `type` (see above)
+4. Construct full output path: `{directory}/{filename}`
+5. Create parent directories if they don't exist: `mkdir -p "{directory}"`
+6. Write the file in this format:
    ```yaml
    ---
    {metadata serialized as YAML}
@@ -46,9 +51,11 @@ and trailing hyphens.
 
    {body}
    ```
-6. Return the output path.
+7. Return the output path.
 
-## Example
+## Examples
+
+### ADR
 
 Input:
 ```
@@ -64,9 +71,8 @@ metadata:
 ```
 
 Config `adrPath`: `./docs/adr`
-Existing files: `./docs/adr/0001-initial-schema.md`
 
-Output: `./docs/adr/0002-use-postgresql-for-event-storage.md`
+Output: `./docs/adr/2026-05-14-use-postgresql-for-event-storage.md`
 
 Written file:
 ```yaml
@@ -83,3 +89,35 @@ tags:
 
 We need a durable event store...
 ```
+
+---
+
+### Code exploration
+
+Input:
+```
+type: adr
+title: Explore audit logging module
+body: "# Findings\n\n..."
+metadata:
+  docType: code-exploration
+  date: 2026-05-14
+```
+
+Config `adrPath`: `./docs/adr`
+
+Output: `./docs/adr/2026-05-14-CE-explore-audit-logging-module.md`
+
+---
+
+### With `parent`
+
+ADR input with `parent: 2026-05-14-audit-logging`:
+
+Output: `./docs/adr/2026-05-14-audit-logging/2026-05-14-use-postgresql-for-event-storage.md`
+
+A code exploration published with the same `parent`:
+
+Output: `./docs/adr/2026-05-14-audit-logging/2026-05-14-CE-explore-audit-logging-module.md`
+
+Both documents are grouped under the same parent directory.
