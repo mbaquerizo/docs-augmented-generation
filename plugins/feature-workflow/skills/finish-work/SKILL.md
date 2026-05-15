@@ -71,7 +71,17 @@ gh pr create --title "<summary>" --body "<body>" --base <base>
 
 Optionally add labels: `ai-authored` or `ai-assisted` if applicable.
 
-## 5. Report
+## 5. Update ticket status
+
+Extract the ticket ID from the branch name (e.g. `story/PROJ-4/...` → `PROJ-4`):
+
+1. Read `.docs-driven/config.json` to find `ticketPath` (default: `./.planning/tickets`)
+2. Scan `ticketPath` for a file matching the ticket ID in its YAML frontmatter
+3. Change `status: in-progress` to `status: in-review` in the frontmatter
+4. Rewrite the file in place
+5. Report the status change: "PROJ-4 moved to in-review"
+
+## 6. Report
 
 Display the PR URL:
 
