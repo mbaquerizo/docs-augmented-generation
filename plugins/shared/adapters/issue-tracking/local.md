@@ -4,7 +4,7 @@ Publishes and updates tickets on the local filesystem.
 
 ## Config fields
 
-Reads from `.docs-driven/config.json` under `adapters.issue-tracking.config`:
+Reads from `.dag/config.json` under `adapters.issue-tracking.config`:
 
 | Field | Required | Default | Description |
 |-------|----------|---------|-------------|

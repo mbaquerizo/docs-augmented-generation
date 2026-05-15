@@ -130,7 +130,7 @@ Publish the pitch using the documentation adapter. Follow the adapter instructio
 
 The adapter instructions end with "Return the output path" — capture it.
 
-1. Read `.docs-driven/config.json` to find the configured documentation adapter
+1. Read `.dag/config.json` to find the configured documentation adapter
 2. Construct the publish content using the contract:
    - `type`: `pitch`
    - `title`: The pitch title (from Section 5)

@@ -4,7 +4,7 @@ Publishes ADRs, pitches, and explorations to the local filesystem.
 
 ## Config fields
 
-Reads from `.docs-driven/config.json` under `adapters.documentation.config`:
+Reads from `.dag/config.json` under `adapters.documentation.config`:
 
 | Field | Required | Default | Description |
 |-------|----------|---------|-------------|

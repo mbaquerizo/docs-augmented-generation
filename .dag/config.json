@@ -10,7 +10,7 @@
     "issue-tracking": {
       "type": "local",
       "config": {
-        "project": "PROJ",
+        "project": "DAG",
         "ticketPath": "./.planning/tickets"
       }
     }

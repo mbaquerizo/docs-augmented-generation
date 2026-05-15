@@ -95,7 +95,7 @@ On approval, publish each ticket using the issue-tracking adapter. Follow the ad
 
 The adapter instructions end with "Return the output path" — capture it for each ticket published.
 
-1. Read `.docs-driven/config.json` to find the enabled issue-tracking adapter
+1. Read `.dag/config.json` to find the enabled issue-tracking adapter
 2. Publish each ticket individually:
    - `type`: `ticket`
    - `title`: ticket title
