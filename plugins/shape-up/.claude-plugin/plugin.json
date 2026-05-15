@@ -1,0 +1,10 @@
+{
+  "name": "shape-up",
+  "version": "0.1.0",
+  "description": "Shape Up methodology pitch generation — structured documents that feed the DAG workflow with appetite-sized feature definitions",
+  "author": {
+    "name": "Matthew Baquerizo",
+    "email": "matthew.baquerizo@pm.me"
+  },
+  "keywords": ["shape-up", "pitches", "planning", "dag"]
+}

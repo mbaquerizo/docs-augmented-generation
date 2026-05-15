@@ -21,55 +21,135 @@ The DAG workflow is implemented as a pipeline of plugins, each producing structu
 
 | Plugin | What it gives you |
 |--------|-------------------|
-| [feature-workflow](plugins/feature-workflow/README.md) | The core DAG pipeline — plan-feature publishes ADRs and explorations, create-tickets breaks work into tracked tickets, start-work loads docs as context, commit preserves decisions, finish-work wraps up |
+| [dag](plugins/dag/README.md) | The core DAG pipeline — plan-feature publishes ADRs and explorations, create-tickets breaks work into tracked tickets, dag-publish routes to configured adapters, start-work loads docs as context, tdd drives test-first, commit preserves decisions, finish-work wraps up |
 | [shape-up](plugins/shape-up/README.md) | Shape Up pitch generation — structured documents that feed the DAG workflow with appetite-sized feature definitions |
-| [tdd](plugins/tdd/README.md) | Test-driven development — documentation of code behavior through tests, complementary to DAG's doc-as-context philosophy |
 | [pair-programming](plugins/pair-programming/README.md) | Navigated pair programming — structured session docs preserve context across sessions |
-| [shared](plugins/shared/README.md) | The DAG plumbing — adapters that publish documentation and tickets so they're retrievable as context |
 
 ## Quickstart
 
+### 1. Clone
+
 ```bash
-# Clone the project
 git clone <repo-url>
 cd docs-augmented-generation
-
-# Configure your adapter paths
-# Edit .dag/config.json with your documentation and ticket directories
 ```
 
-### Claude Code
+### 2. Configure adapters
+
+Edit `.dag/config.json` with your documentation and ticket directories:
+
+```json
+{
+  "adapters": {
+    "documentation": {
+      "type": "local",
+      "config": { "adrPath": "./docs/adr", "pitchPath": "./docs/pitches" }
+    },
+    "issue-tracking": {
+      "type": "local",
+      "config": { "project": "PROJ", "ticketPath": "./docs/tickets" }
+    }
+  }
+}
+```
+
+### 3. Claude Code
+
+#### Marketplace (recommended)
+
+Add the marketplace URL, then install plugins from within Claude Code:
+
+```
+/plugin marketplace add mbaquerizo/docs-augmented-generation
+/plugin install dag@docs-augmented-generation
+/plugin install shape-up@docs-augmented-generation
+/plugin install pair-programming@docs-augmented-generation
+```
+
+Individual plugins can be enabled or disabled in settings.
+
+#### Clone & run
+
+For local development without a marketplace:
 
 ```bash
-claude --plugin-dir ./plugins
+claude --plugin-dir ./plugins/dag \
+  --plugin-dir ./plugins/shape-up \
+  --plugin-dir ./plugins/pair-programming
 ```
 
-Or install via the Claude Code marketplace and enable individual plugins.
-
-### Opencode
+### 4. Opencode
 
 ```bash
 npx skills add ./plugins
 ```
 
-This registers skills and agents from the plugin directory with your opencode installation.
+This registers skills and agents from all plugin directories with your opencode installation.
 
-Alternatively, reference the plugin directory in your `opencode.jsonc`:
+Alternatively, add a root `opencode.jsonc`:
 
 ```jsonc
 {
-  "plugins": ["./plugins"]
+  "$schema": "https://opencode.ai/config.json",
+  "skills": {
+    "paths": ["./plugins"]
+  }
 }
 ```
+
+### 5. Verify
+
+Start a session and try a slash command:
+
+```
+/dag:plan-feature Set up user authentication
+```
+
+The model should load the plan-feature skill and begin the planning workflow.
 
 ## Installation
 
 See individual plugin READMEs for prerequisites:
 
-- **feature-workflow** — requires the issue-tracking adapter configured in `.dag/config.json` and `gh` CLI for the finish-work skill
+- **dag** — requires `.dag/config.json` with adapter configuration, and `gh` CLI for the finish-work skill
 - **shape-up** — requires the documentation adapter configured
-- **tdd** — requires a test framework and runner
 - **pair-programming** — requires a human in the loop
+
+## Usage
+
+Skills are invoked automatically by the model when a task matches their description, or explicitly by the user:
+
+| Syntax | Example | Scope |
+|--------|---------|-------|
+| `/plugin:skill` | `/dag:plan-feature` | Any skill from any installed plugin |
+| `@agent-name` | `@code-exploration` | Agent invoked in conversation |
+| Auto-dispatch | — | Model matches task context to skill descriptions |
+
+Slash commands (`/dag:plan-feature`, `/dag:create-tickets`, `/dag:finish-work`)
+are available at any prompt. Sub-skills like `tdd`, `commit`, `start-work`, and
+`dag-publish` are invoked by higher-level skills as part of the pipeline — no
+manual slash needed.
+
+### Pipeline flow
+
+```
+User: /dag:plan-feature "Add user auth"
+  → plan-feature reads config, calls code-exploration agent
+  → plan-feature drafts ADR + exploration, calls dag-publish skill
+  → dag-publish reads .dag/config.json, routes to configured adapter
+  → Adapter writes files, returns paths
+
+User: /dag:create-tickets
+  → create-tickets drafts hierarchy, calls dag-publish
+  → dag-publish writes ticket files via configured adapter
+
+User: [start-work runs on a ticket]
+  → start-work calls tdd for test-first implementation
+  → cycle: implement → commit → implement → commit
+
+User: /dag:finish-work
+  → finish-work invokes commit skill, syncs, creates PR
+```
 
 ## Project structure
 
@@ -77,9 +157,8 @@ See individual plugin READMEs for prerequisites:
 .dag/
   config.json              # Adapter configuration
 plugins/
-  shared/                  # Shared adapter plumbing
-  feature-workflow/        # Feature pipeline skills + agents
+  dag/                     # Core pipeline (skills + agents + publisher)
   shape-up/                # Shape Up skill
-  tdd/                     # TDD skill
   pair-programming/        # Navigated pair programming
+  adapter-*/               # Optional cloud adapter plugins (Jira, GitHub, etc.)
 ```

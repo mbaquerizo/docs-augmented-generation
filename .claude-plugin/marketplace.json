@@ -6,9 +6,9 @@
   },
   "plugins": [
     {
-      "name": "feature-workflow",
-      "source": "feature-workflow",
-      "description": "End-to-end feature specification and code generation pipeline",
+      "name": "dag",
+      "source": "dag",
+      "description": "Docs Augmented Generation (DAG) — structured docs drive planning, ticketing, implementation, and PRs",
       "version": "0.1.0",
       "author": {
         "name": "Matthew Baquerizo"
@@ -27,15 +27,6 @@
       "name": "shape-up",
       "source": "shape-up",
       "description": "Shape Up methodology pitch generation",
-      "version": "0.1.0",
-      "author": {
-        "name": "Matthew Baquerizo"
-      }
-    },
-    {
-      "name": "tdd",
-      "source": "tdd",
-      "description": "Test Driven Development skill",
       "version": "0.1.0",
       "author": {
         "name": "Matthew Baquerizo"

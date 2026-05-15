@@ -16,7 +16,7 @@ Read the ticket from the issue-tracking adapter: use the project prefix and ID t
 
 ## 3. Update ticket status
 
-Update the ticket's status from `open` to `in-progress`. Follow the update instructions in `plugins/shared/adapters/issue-tracking/` and the contract in `plugins/shared/adapters/contract.md`:
+Update the ticket's status from `open` to `in-progress` using the dag-publish skill:
 
 1. Read the current ticket file
 2. Change `status: open` to `status: in-progress`
@@ -62,7 +62,7 @@ Once the plan is approved, set up the working environment:
 
 ### 8.1 Detect TDD skill
 
-Try to load the **tdd** skill via the `skill` tool. If the tool fails or the skill is unavailable, fall back to checking whether the file exists at `plugins/tdd/skills/tdd/SKILL.md`. If neither succeeds, TDD is not available.
+Try to load the **tdd** skill. If unavailable, TDD is not available.
 
 If TDD was set to always-on mode and the detection fails, warn the user and proceed without it.
 

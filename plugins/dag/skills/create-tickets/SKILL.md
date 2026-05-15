@@ -91,9 +91,9 @@ Allow revisions to the hierarchy, titles, descriptions, or any ticket detail.
 
 ## 5. Publish
 
-On approval, publish each ticket using the issue-tracking adapter. Follow the adapter instructions in `plugins/shared/adapters/issue-tracking/` and the contract in `plugins/shared/adapters/contract.md`.
+On approval, publish each ticket using the dag-publish skill.
 
-The adapter instructions end with "Return the output path" — capture it for each ticket published.
+The dag-publish skill returns the published path — capture it for each ticket.
 
 1. Read `.dag/config.json` to find the enabled issue-tracking adapter
 2. Publish each ticket individually:

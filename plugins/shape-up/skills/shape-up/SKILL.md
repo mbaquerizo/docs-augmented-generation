@@ -126,9 +126,9 @@ Present the full pitch draft to the user. Call out:
 
 ## 8. Publish
 
-Publish the pitch using the documentation adapter. Follow the adapter instructions in `plugins/shared/adapters/documentation/` and the contract in `plugins/shared/adapters/contract.md`.
+Try to load the **dag-publish** skill. If available, follow its instructions to publish the pitch. The skill returns the published path — capture it.
 
-The adapter instructions end with "Return the output path" — capture it.
+If the dag-publish skill is not available, present the final draft as formatted markdown and tell the user they need the dag plugin (with the dag-publish skill) to publish documents automatically. They can save the draft manually in the meantime.
 
 1. Read `.dag/config.json` to find the configured documentation adapter
 2. Construct the publish content using the contract:

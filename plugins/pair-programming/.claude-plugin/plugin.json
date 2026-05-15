@@ -1,0 +1,10 @@
+{
+  "name": "pair-programming",
+  "version": "0.1.0",
+  "description": "Navigated pair programming — Claude as navigator, you as driver. Structured session docs preserve context across sessions.",
+  "author": {
+    "name": "Matthew Baquerizo",
+    "email": "matthew.baquerizo@pm.me"
+  },
+  "keywords": ["pair-programming", "navigator", "guided-implementation"]
+}

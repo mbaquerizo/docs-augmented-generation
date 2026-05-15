@@ -66,9 +66,9 @@ Ask for approval before publishing. Allow revisions.
 
 ## 7. Publish
 
-Publish using the documentation adapter with a shared `parent` value so both documents are grouped together. Follow the adapter instructions in `plugins/shared/adapters/documentation/` and the contract in `plugins/shared/adapters/contract.md`.
+Publish using the dag-publish skill with a shared `parent` value so both documents are grouped together.
 
-The adapter instructions end with "Return the output path" — capture it for each document published.
+The dag-publish skill returns the published path — capture it for each document.
 
 1. Determine a parent identifier: `{timestamp}-{feature-slug}` (e.g. `2026-05-14-add-user-auth`)
 2. Publish the code exploration doc first:
