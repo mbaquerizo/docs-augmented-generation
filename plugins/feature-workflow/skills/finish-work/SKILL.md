@@ -1,25 +1,85 @@
 ---
 name: finish-work
-description: Stage and commit any uncommitted work, sync, push, and create or update a pull request. Use when I ask to create a PR or invoke the skill directly.
+description: Ensure all work is committed, sync with base branch, push, and create or update a pull request. Use when I ask to create a PR or invoke the skill directly.
 ---
 
-## Context
-- Status: !`git status`
-- Log: !`git log --oneline -10`
+## 1. Pre-flight checks
 
-## Instructions
+Before proceeding, validate the environment:
 
-If there are any unstaged or uncommitted changes, determine if they should be committed and commit using the commit skill
+- **Remote** — Check `git remote -v`. If no remote is configured, report: "No remote configured. Set one with `git remote add origin <url>`" and stop.
+- **GitHub CLI** — Check that `gh` is installed (`gh --version`). If missing, report: "Install GitHub CLI: https://cli.github.com/" and stop.
 
-Ensure up to date with base branch, rebase/merge if needed
+## 2. Ensure clean working tree
 
-Push to remote
+Run `git status`:
 
-Draft a PR using the template in .github/PULL_REQUEST_TEMPLATE.md. If one does not exist, use the pr template in [pr-template.md](pr-template.md)
+- If there are unstaged or uncommitted changes, invoke the **commit** skill. Wait for the commit to complete before proceeding.
+- If the working tree is clean, continue.
 
-Ask for PR draft approval
+## 3. Sync with base branch
 
-After approval, create the PR with "ai-authored" or "ai-assisted" tags if applicable.
+Detect the default base branch:
+
+1. `git remote show origin` — extract the HEAD branch (typically `main`)
+2. `git fetch origin <base>`
+3. `git rebase <base>` — rebase your branch onto the latest base
+
+**If rebase conflicts occur:**
+
+- Run `git rebase --abort`
+- Report to the user: "Rebase conflicted on: <list of conflicted files>"
+- Stop. Do not force-resolve or continue.
+
+If rebase succeeds, force-push with lease:
+
+- `git push --force-with-lease origin <current-branch>`
+
+## 4. Create or update PR
+
+Check whether a PR already exists for this branch:
+
+```
+gh pr list --head <current-branch> --state open --json number,title,url
+```
+
+### If a PR already exists
+
+Check whether there are new changes worth calling out since the last update:
+
+- Review `git log` since the last push or PR update
+- If there are meaningful new changes, draft an updated body using the PR template (`pr-template.md`) with the latest commit log and context. Present the draft to the user. After approval, update it:
+  ```
+  gh pr edit <number> --body "<updated body>"
+  ```
+- If there are no meaningful new changes, the work is complete after the push — no PR update needed.
+
+### If no PR exists — create one
+
+Use the PR template (`pr-template.md`) as the structure. Populate the body with:
+
+- **Issue** — Link or reference the ticket ID
+- **Summary** — Synthesized from the ticket description (in context) and `git log <base>...HEAD --oneline`
+- **Changes** — Key changes derived from commit messages
+- **Tests** — Note test coverage from the session context
+
+Draft the PR and present it to the user for approval. After approval, create it:
+
+```
+gh pr create --title "<summary>" --body "<body>" --base <base>
+```
+
+Optionally add labels: `ai-authored` or `ai-assisted` if applicable.
+
+## 5. Report
+
+Display the PR URL:
+
+```
+gh pr view <number> --json url --jq .url
+```
+
+Print the URL to the user.
 
 ## When you are done
 
