@@ -32,9 +32,13 @@ The appetite constrains the solution — not the other way around. Steer the use
 
 Walk through each section of the pitch with the user. Be conversational — ask questions, propose options, iterate. Reference [pitch-structure.md](pitch-structure.md) for section details.
 
-### 3.1 Breadboarding
+### 3.1 Solution Outline
 
-Use a breadboard to sketch the solution. A breadboard has three elements:
+Before breadboarding, write a **Solution Outline** — 2-4 sentences summarizing what will be built at a high level. This is the elevator pitch for the approach. It should make sense on its own, and the breadboard that follows fills in the detail.
+
+### 3.2 Breadboarding
+
+Use a breadboard to sketch the solution in detail. A breadboard has three elements:
 
 - **Places** — Screens, views, or states the user moves through
 - **Affordances** — Actions or controls available in each place
@@ -60,9 +64,9 @@ flowchart LR
 | Issue Form | Submit, Cancel | Issue Detail |
 | Issue Detail | Close, Reopen, Edit | Issue List |
 
-### 3.2 Engineering notes
+### 3.3 Engineering notes
 
-Capture technical points that are too implementation-focused for the Solution section. These guide engineering during building but don't belong in the solution outline:
+Capture technical points that are too implementation-focused for the Solution Outline or Breadboard. These guide engineering during building but don't belong in the solution outline:
 
 - Data model considerations
 - API endpoint structure
@@ -79,6 +83,8 @@ Track unresolved items throughout the shaping session. Each open question should
 - What needs to be resolved
 - Who needs to weigh in
 - Any blocking relationships to other sections
+
+**Resolution pattern**: When an open question is resolved, move the decision into the relevant section (Problem, Solution Outline, Breadboard, No-gos, etc.) and remove the entry from Open Questions. Resolved questions do not belong here.
 
 Open Questions block status from advancing to `shaped`. All must be resolved first.
 
@@ -105,7 +111,7 @@ shaping → shaped → building → done
 
 | From | To | Gate |
 |------|----|------|
-| `shaping` | `shaped` | All required sections populated (Problem, Appetite, Solution, No-gos). Rabbit holes resolved — either explicitly "none" or risks documented with workarounds (derisked). All Open Questions resolved. Ask approval before changing. |
+| `shaping` | `shaped` | All required sections populated (Problem, Appetite, Solution Outline, Breadboard, No-gos). Rabbit holes resolved — either explicitly "none" or risks documented with workarounds (derisked). All Open Questions resolved. Ask approval before changing. |
 | `shaped` | `building` | Status is `shaped`. Ask approval before changing. |
 | Any | `shelved` | No gate. Ask confirmation. |
 | `shaped` | `shaping` | Always allowed (iteration). |

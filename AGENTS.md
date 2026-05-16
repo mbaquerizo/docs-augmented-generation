@@ -59,7 +59,7 @@ Never create a commit unprompted. The `finish-work` skill handles the full commi
 
 ### Check changelog before committing
 
-Before any commit, check whether the change is user-facing for a plugin (new skill, changed behavior, fix, removed feature). If so, update that plugin's `CHANGELOG.md` first, then include the changelog update in the commit.
+Before any commit, check whether the change is user-facing for a plugin (new skill, changed behavior, fix, removed feature). If so, update that plugin's `CHANGELOG.md` first, then include the changelog update in the commit. The version in `CHANGELOG.md` must match the `version` field in that plugin's `.claude-plugin/plugin.json` — always bump both together.
 
 Changelogs follow [Common Changelog](https://common-changelog.org): categories are Added, Changed, Removed, Fixed. Breaking changes get a `**Breaking:**` prefix. Each entry references a commit SHA. No `[Unreleased]` section — entries are written when a release is tagged. Independent semver per plugin.
 

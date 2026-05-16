@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.0] - 2026-05-16
+
+### Changed
+
+- Split Solution section into Solution Outline (summary) and Breadboard (diagram + table + decisions) in pitch structure and shape-up skill (83d76d9)
+
 ## [1.0.0] - 2026-05-15
 
 _First release._

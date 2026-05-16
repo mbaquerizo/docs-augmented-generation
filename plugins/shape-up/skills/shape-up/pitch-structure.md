@@ -38,11 +38,18 @@ Include the rationale: why this size? What's the cost of waiting or the value of
 
 ---
 
-### Solution
+### Solution Outline
 
-A high-level outline of what will be built. Not a spec document — this is the shaped solution that fits within the appetite.
+A concise summary (2-4 sentences) describing what will be built. Not a spec — this is the shaped solution that fits within the appetite. Covers the approach at a high level without diving into places, affordances, or implementation detail.
 
-Represent the solution with:
+**Required for `shaped`**: yes
+**When incomplete**: `_TO DO: Write a summary of the approach — what is being built and at a high level, how does it work?_`
+
+---
+
+### Breadboard
+
+The detailed interaction model. Represent it with:
 
 1. **Breadboard diagram** — A Mermaid flowchart showing Places, Affordances, and Connections. Example:
 
@@ -61,13 +68,13 @@ flowchart LR
 3. **Key decisions** — Notable choices that shaped the solution (e.g. "We'll use a single table, not a separate service").
 
 **Required for `shaped`**: yes
-**When incomplete**: `_TO DO: Sketch the solution — what places, affordances, and connections exist? What are the key decisions?_`
+**When incomplete**: `_TO DO: Sketch the breadboard — what places, affordances, and connections exist? What are the key decisions?_`
 
 ---
 
 ### Engineering notes
 
-Technical implementation guidance that's too detailed for the Solution section. Examples:
+Technical implementation guidance that's too detailed for the Solution Outline or Breadboard. Examples:
 
 - Data model or schema decisions
 - API contract notes
@@ -116,6 +123,8 @@ Unresolved items that came out of the shaping session. Each should include:
 
 - The question or decision needed
 - Who needs to answer it
+
+**Resolution pattern**: When an open question is resolved, move the decision into the relevant section (Problem, Solution Outline, Breadboard, No-gos, etc.) and remove the entry from Open Questions. Do not keep resolved questions here — this section tracks only unresolved items.
 
 All open questions must be resolved before status can advance to `shaped`.
 
