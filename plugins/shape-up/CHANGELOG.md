@@ -4,7 +4,7 @@
 
 ### Changed
 
-- Split Solution section into Solution Outline (summary) and Breadboard (diagram + table + decisions) in pitch structure and shape-up skill (83d76d9)
+- Split Solution section into Solution Outline (summary) and Breadboard (diagram + table + decisions) in pitch structure and shape-up skill (a320c3df744fea445899e942d81aade02050bd1a)
 
 ## [1.0.0] - 2026-05-15
 
