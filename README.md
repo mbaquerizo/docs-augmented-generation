@@ -1,17 +1,10 @@
 # Docs Augmented Generation (DAG)
 
-Ever finish a deep architectural discussion, capture it in an ADR, and then watch the next code generation session blissfully ignore it? DAG is built for that gap.
+The context you need for good code generation exists — it's just not documented. It's in your head, in conversations you've already had, in decisions you've already made. DAG is built for that gap.
 
-**Documentation hygiene → code generation accuracy.** Structured documents like ADRs, code explorations, and decision logs get injected as context for higher-quality code generation. Your docs are the prompt — every decision preserved, every exploration documented, every generation informed.
+**Documentation hygiene → code generation accuracy.** Structured documents like ADRs, code explorations, and decision logs get injected as context for higher-quality code generation. Your docs are the prompt — every decision preserved, every generation informed.
 
-DAG parallels RAG, but with a different retrieval target:
-
-| | RAG | DAG |
-|---|---|---|
-| **What is retrieved** | Arbitrary text chunks via semantic similarity | Curated, structured documentation |
-| **Source type** | Any corpus (wikis, web, generic docs) | Authoritative documents (ADRs, exploration docs, decision logs) |
-| **Retrieval logic** | "Find chunks similar to this query" | "Find architectural decisions relevant to this task" |
-| **Goal** | Ground the model in facts, reduce hallucination | Ensure generated code respects prior decisions and preserves engineering context |
+DAG parallels RAG: instead of retrieving arbitrary text chunks via semantic similarity, it injects curated, structured documentation as context for code generation. The goal is that every generation respects prior architectural decisions and preserves engineering context.
 
 This project provides a collection of plugins for **Claude Code** and **Opencode** that implement the DAG workflow.
 
