@@ -1,5 +1,7 @@
 # Docs Augmented Generation (DAG)
 
+📝✨ → 🤖🎯
+
 The context you need for good code generation exists — it's just not documented. It's in your head, in conversations you've already had, in decisions you've already made. DAG is built for that gap.
 
 **Documentation hygiene → code generation accuracy.** Structured documents like ADRs, code explorations, and decision logs get injected as context for higher-quality code generation. Your docs are the prompt — every decision preserved, every generation informed.
