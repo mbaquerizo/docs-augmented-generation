@@ -36,22 +36,48 @@ cd docs-augmented-generation
 
 ### 2. Configure adapters
 
-Edit `.dag/config.json` with your documentation and ticket directories:
+`.dag/config.json` is required — it tells the pipeline where to publish documents and tickets. Two adapter categories, each independently configured:
+
+| Adapter | What it routes | Required? |
+|---------|---------------|-----------|
+| `documentation` | ADRs, code explorations, pitches | yes |
+| `issue-tracking` | Tickets (epics, stories, tasks, bugs, spikes) | yes |
+
+Each adapter has a `type` field that selects the backend. The built-in `local` adapter writes to the filesystem at the paths you specify. Cloud adapter support (Jira, GitHub Issues, etc.) is planned.
+
+Edit `.dag/config.json`:
 
 ```json
 {
   "adapters": {
     "documentation": {
       "type": "local",
-      "config": { "adrPath": "./docs/adr", "pitchPath": "./docs/pitches" }
+      "config": {
+        "adrPath": "./docs/adr",
+        "pitchPath": "./docs/pitches"
+      }
     },
     "issue-tracking": {
       "type": "local",
-      "config": { "project": "PROJ", "ticketPath": "./docs/tickets" }
+      "config": {
+        "project": "PROJ",
+        "ticketPath": "./docs/tickets"
+      }
     }
   }
 }
 ```
+
+Fields for the `local` adapter:
+
+| Field | Meaning |
+|-------|---------|
+| `adrPath` | Where ADRs and code explorations land. Each gets a date-prefixed filename like `2026-05-14-add-auth.md`. |
+| `pitchPath` | Where Shape Up pitches land. |
+| `project` | Ticket ID prefix used by the local adapter (produces IDs like `PROJ-1`). Cloud adapters may interpret this differently — e.g. a Jira adapter would use it as the Jira project key. |
+| `ticketPath` | Path to the ticket file directory. |
+
+All paths are relative to the project root. The `parent` field in published documents creates subdirectories for grouping related docs.
 
 ### 3. Claude Code
 
