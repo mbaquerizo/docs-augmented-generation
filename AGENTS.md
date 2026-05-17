@@ -57,11 +57,26 @@ Skills without `argument-hint` are **auto-dispatched** by the model when its rea
 
 Never create a commit unprompted. The `finish-work` skill handles the full commit → PR flow. If a task completes outside that skill, stop and report; don't commit.
 
-### Check changelog before committing
+### Changelog and versioning
 
-Before any commit, check whether the change is user-facing for a plugin (new skill, changed behavior, fix, removed feature). If so, update that plugin's `CHANGELOG.md` first, then include the changelog update in the commit. The version in `CHANGELOG.md` must match the `version` field in that plugin's `.claude-plugin/plugin.json` — always bump both together.
+Changelogs are maintained per-plugin and updated on release, not per commit.
+Update them only when the user explicitly asks to release or bump a version.
 
-Changelogs follow [Common Changelog](https://common-changelog.org): categories are Added, Changed, Removed, Fixed. Breaking changes get a `**Breaking:**` prefix. Each entry references a commit SHA. No `[Unreleased]` section — entries are written when a release is tagged. Independent semver per plugin.
+Release workflow:
+
+1. Collect commits since the last release tag or changelog entry using
+   `git log <last-version-tag>...HEAD --oneline` or similar
+2. Categorize changes per [Common Changelog](https://common-changelog.org):
+   Added, Changed, Removed, Fixed. Breaking changes get a `**Breaking:**` prefix.
+3. Bump the `version` field in the plugin's `.claude-plugin/plugin.json`
+   and add a matching entry to its `CHANGELOG.md`
+4. Use the **commit** skill (`/commit`) to create the release commit
+
+Version follows independent semver per plugin. CHANGELOG.md version and
+plugin.json version must always match.
+
+Commit SHAs in changelog entries should be formatted as markdown links:
+`[c033d60](https://github.com/mbaquerizo/docs-augmented-generation/commit/c033d60)`
 
 ### Validate against plugin-dev skills
 
