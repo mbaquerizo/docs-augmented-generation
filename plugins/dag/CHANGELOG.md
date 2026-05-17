@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.0] - 2026-05-16
+
+### Changed
+
+- start-work skill restructured into 3 phases (Setup, Planning,
+  Implementation) with worktree setup moved before planning, iterative
+  planning with explicit approval gate, and complexity heuristic
+  extracted to reference file (c033d60)
+
 ## [1.1.0] - 2026-05-16
 
 ### Added

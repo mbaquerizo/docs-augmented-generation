@@ -1,6 +1,6 @@
 {
   "name": "dag",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Docs Augmented Generation (DAG) — structured docs drive planning, ticketing, implementation, and PRs",
   "author": {
     "name": "Matthew Baquerizo",
