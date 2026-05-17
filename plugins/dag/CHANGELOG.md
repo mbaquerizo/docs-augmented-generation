@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.1.0] - 2026-05-16
+
+### Added
+
+- Retrieval instructions section in issue-tracking local adapter
+
+### Changed
+
+- start-work skill Section 2 now references adapter retrieval instructions
+- finish-work skill Section 5 now references adapter retrieval instructions
+
 ## [1.0.0] - 2026-05-15
 
 _First release._

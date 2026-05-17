@@ -75,8 +75,8 @@ Optionally add labels: `ai-authored` or `ai-assisted` if applicable.
 
 Extract the ticket ID from the branch name (e.g. `story/PROJ-4/...` → `PROJ-4`):
 
-1. Read `.dag/config.json` to find `ticketPath` (default: `./.planning/tickets`)
-2. Scan `ticketPath` for a file matching the ticket ID in its YAML frontmatter
+1. Read `.dag/config.json` to find `ticketPath` under `adapters.issue-tracking.config` (default: `./.planning/tickets`)
+2. Follow the [retrieval instructions](plugins/dag/skills/dag-publish/issue-tracking-local.md) to locate the ticket file by its ID
 3. Change `status: in-progress` to `status: in-review` in the frontmatter
 4. Rewrite the file in place
 5. Report the status change: "PROJ-4 moved to in-review"

@@ -12,7 +12,12 @@ Check your current operating mode. If you are in Build, Auto, or Accept Edits mo
 
 Accept a ticket ID or feature description from arguments ($ARGUMENTS). If no ticket ID is provided, ask which ticket to work on.
 
-Read the ticket from the issue-tracking adapter: use the project prefix and ID to locate the file in `ticketPath`, then read it.
+Read the ticket from the issue-tracking adapter:
+
+1. Read `.dag/config.json` to find the `project` prefix under `adapters.issue-tracking.config.project` and the ticket directory under `adapters.issue-tracking.config.ticketPath` (default: `./.planning/tickets`)
+2. Follow the [retrieval instructions](plugins/dag/skills/dag-publish/issue-tracking-local.md) to locate and read the ticket file by its ID
+
+For context on the ticket data model, see the [publish contract](plugins/dag/skills/dag-publish/contract.md).
 
 ## 3. Update ticket status
 

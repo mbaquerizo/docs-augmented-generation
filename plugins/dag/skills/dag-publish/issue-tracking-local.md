@@ -53,9 +53,19 @@ Slugs are created from the title: lowercase, replace non-alphanumeric characters
    ```
 7. Return the output path.
 
+## Retrieval instructions
+
+To look up an existing ticket by ID:
+
+1. Read `.dag/config.json` → `adapters.issue-tracking.config.project` (prefix) and `ticketPath` (directory)
+2. Scan `ticketPath` for `.md` files whose YAML frontmatter `id` field matches the requested ID (e.g. `DAG-11` matches `id: DAG-11`)
+3. Return the matched file path
+
+The filename pattern is `{project}-{number}-{slug}.md`, but scanning frontmatter is the authoritative match — filenames can change on rename.
+
 ## Updates
 
-When updating an existing ticket (e.g. status change), the skill passes the known `filename` or the adapter looks it up by ID. The adapter rewrites the file in place at the same path.
+When updating an existing ticket (e.g. status change), the skill passes the known `filename` or the adapter looks it up by ID (see [Retrieval instructions](#retrieval-instructions)). The adapter rewrites the file in place at the same path.
 
 ## Example
 
