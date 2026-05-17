@@ -18,18 +18,18 @@ Reads from `.dag/config.json` under `adapters.documentation.config`:
 | `type` | Resolves the output directory: `adr` → `adrPath`, `pitch` → `pitchPath` |
 | `title` | File heading (`# {title}`) and slug for filename |
 | `body` | Body content after frontmatter |
-| `parent` | Appended to the output directory as a subdirectory: `{basePath}/{parent}` |
+| `parent` | Appended to the output directory as a subdirectory per the [shared adapter conventions](adapter-conventions.md): `{basePath}/{parent}` |
 | `metadata` | Serialized as YAML frontmatter between `---` delimiters |
 
 ## Filename generation
 
-Slugs are created from the title: lowercase, replace non-alphanumeric characters with hyphens, collapse consecutive hyphens, trim leading and trailing hyphens.
+Slugs are generated per the [shared adapter conventions](adapter-conventions.md).
 
-Filenames use a date prefix from `metadata.date` (ISO 8601 date part), or today's date if not set:
+Filenames use a date prefix per the [shared adapter conventions](adapter-conventions.md):
 
-- **ADRs** (`type: adr`, no `docType`): `{YYYY-MM-DD}-{slug}.md`
-- **Code explorations** (`type: adr`, `metadata.docType: "code-exploration"`): `{YYYY-MM-DD}-CE-{slug}.md`
-- **Pitches** (`type: pitch`): `{slug}.md`
+- **ADRs** (`type: adr`, no `docType`): `{YYYY-MM-DD}-{slug}.md` (see [naming conventions](adapter-conventions.md#7-naming))
+- **Code explorations** (`type: adr`, `metadata.docType: "code-exploration"`): `{YYYY-MM-DD}-CE-{slug}.md` (see [naming conventions](adapter-conventions.md#7-naming))
+- **Pitches** (`type: pitch`): `{slug}.md` (see [naming conventions](adapter-conventions.md#7-naming))
 
 ## Publish instructions
 

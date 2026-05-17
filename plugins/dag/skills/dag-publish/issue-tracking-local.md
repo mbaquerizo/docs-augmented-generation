@@ -18,6 +18,7 @@ Reads from `.dag/config.json` under `adapters.issue-tracking.config`:
 | `type` | Unused (all types go to `ticketPath`). Reserved for future use |
 | `title` | File heading (`# {title}`) and slug for filename |
 | `body` | Body content after frontmatter |
+| `parent` | Unsupported. Silently ignored when provided. |
 | `metadata` | Serialized as YAML frontmatter between `---` delimiters. Adapter-specific fields listed below |
 
 ### Adapter-specific metadata fields
@@ -28,7 +29,7 @@ Reads from `.dag/config.json` under `adapters.issue-tracking.config`:
 
 ## ID and filename generation
 
-Slugs are created from the title: lowercase, replace non-alphanumeric characters with hyphens, collapse consecutive hyphens, trim leading and trailing hyphens.
+Slugs are generated per the [shared adapter conventions](adapter-conventions.md).
 
 1. Scan `ticketPath` for existing files matching `{project}-\d+-*.md`
 2. Find the highest existing ID number, increment by 1 (start at 1 if none)
