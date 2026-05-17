@@ -14,4 +14,3 @@ Thumbs.db
 *.pyc
 __pycache__/
 target/
-.planning/

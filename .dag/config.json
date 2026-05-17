@@ -3,15 +3,15 @@
     "documentation": {
       "type": "local",
       "config": {
-        "adrPath": "./.planning/adr",
-        "pitchPath": "./.planning/pitches"
+        "adrPath": "./.dag/docs/adr",
+        "pitchPath": "./.dag/docs/pitches"
       }
     },
     "issue-tracking": {
       "type": "local",
       "config": {
         "project": "DAG",
-        "ticketPath": "./.planning/tickets"
+        "ticketPath": "./.dag/docs/tickets"
       }
     }
   }
