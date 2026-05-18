@@ -9,7 +9,6 @@
       "name": "dag",
       "source": "dag",
       "description": "Docs Augmented Generation (DAG) — structured docs drive planning, ticketing, implementation, and PRs",
-      "version": "0.1.0",
       "author": {
         "name": "Matthew Baquerizo"
       }
@@ -18,7 +17,6 @@
       "name": "pair-programming",
       "source": "pair-programming",
       "description": "Pair programming utility for codebase familiarization and interactive pair programming, with Claude as navigator",
-      "version": "0.1.0",
       "author": {
         "name": "Matthew Baquerizo"
       }
@@ -27,13 +25,11 @@
       "name": "shape-up",
       "source": "shape-up",
       "description": "Shape Up methodology pitch generation",
-      "version": "0.1.0",
       "author": {
         "name": "Matthew Baquerizo"
       }
     }
   ],
-  "version": "0.1.0",
   "metadata": {
     "pluginRoot": "./plugins"
   }
