@@ -26,6 +26,7 @@ Reads from `.dag/config.json` under `adapters.issue-tracking.config`:
 | Field | Required | Description |
 |-------|----------|-------------|
 | `issueType` | yes | Ticket archetype: `epic`, `story`, `task`, `bug`, `spike` |
+| `blockedBy` | no | List of blocking ticket IDs, serialized as YAML list in frontmatter |
 
 ## ID and filename generation
 
@@ -101,6 +102,8 @@ status: open
 tags:
   - auth
   - backend
+blockedBy:
+  - UI-1
 ---
 # Add user login endpoint
 

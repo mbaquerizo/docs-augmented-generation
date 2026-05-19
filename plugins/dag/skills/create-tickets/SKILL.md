@@ -103,6 +103,9 @@ The dag-publish skill returns the published path — capture it for each ticket.
    - `metadata.issueType`: the archetype (`epic`, `story`, `task`, `bug`, `spike`)
    - `metadata.status`: `open`
    - `metadata.tags`: relevant tags from planning
+   - `metadata.blockedBy`: list of blocking ticket IDs from the draft relationship notes (omit if none)
+   - `metadata.parent`: parent epic ID if the ticket belongs to an epic
+   - `metadata.children`: list of child ticket IDs (epic only, omit otherwise)
    - Capture the returned path
 3. After all tickets are published, present a summary table:
    ```

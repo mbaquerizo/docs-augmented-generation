@@ -11,6 +11,7 @@ A reference for choosing the right ticket type when breaking down feature work. 
 | `status` | yes | One of: `open`, `in-progress`, `in-review`, `done` |
 | `tags` | no | List of labels for categorization |
 | `parent` | no | Parent epic ID or grouping identifier |
+| `blockedBy` | no | List of ticket IDs that block this ticket (e.g. `["DAG-2"]`) |
 
 ## Archetypes
 
@@ -32,6 +33,7 @@ issueType: epic
 status: open
 tags:
   - area
+blockedBy: []
 ---
 
 # {Epic Title}
@@ -78,6 +80,7 @@ issueType: story
 status: open
 tags:
   - area
+blockedBy: []
 ---
 
 # {Story Title}
@@ -137,6 +140,7 @@ issueType: task
 status: open
 tags:
   - area
+blockedBy: []
 ---
 
 # {Task Title}
@@ -179,6 +183,7 @@ issueType: bug
 status: open
 tags:
   - area
+blockedBy: []
 ---
 
 # {Bug Title}
@@ -231,6 +236,7 @@ issueType: spike
 status: open
 tags:
   - area
+blockedBy: []
 ---
 
 # {Spike Title}
