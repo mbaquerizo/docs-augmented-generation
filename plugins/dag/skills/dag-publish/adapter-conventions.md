@@ -122,4 +122,29 @@ Example: `two-speed-process-for-billing-features`
 
 Pitches exist outside a timeline — no date prefix.
 
+---
+
+## 8. Relationship metadata
+
+Tickets reference each other through metadata fields that express hierarchy,
+blocking, and grouping. These fields are cross-adapter conventions —
+documentation and issue-tracking adapters should each map them to their
+native storage mechanism.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `parent` | string | Parent epic ID or grouping identifier. Maps to directory nesting (docs) or YAML frontmatter (issue-tracking). |
+| `blockedBy` | list of strings | Ticket IDs that this ticket depends on. Issue-tracking adapters should serialize as YAML list; cloud adapters should link to the blocking issues. |
+| `children` | list of strings | Child ticket IDs (epic field). Currently defined on epics for reverse lookup. |
+
+All three fields are optional. Adapters must not fail when absent.
+
+### Adapter-specific mapping
+
+| Adapter type | parent | blockedBy | children |
+|--------------|--------|-----------|----------|
+| Local issue-tracking | YAML frontmatter | YAML frontmatter | YAML frontmatter |
+| Local documentation | Directory nesting | Unused | Unused |
+| Cloud (future) | Issue link or label | Issue dependency link | Issue dependency link |
+
 
