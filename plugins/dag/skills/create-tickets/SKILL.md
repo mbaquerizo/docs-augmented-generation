@@ -6,7 +6,7 @@ argument-hint: "[feature description]"
 
 ## 1. Input
 
-If we just planned a feature using the `/plan-feature` skill, use the resulting ADR and code exploration as input. Otherwise use the provided arguments. If neither is available, ask what feature to create tickets for.
+If an ADR or code exploration exists from a prior planning session, use them as input. Otherwise use the provided arguments. If neither is available, ask what feature to create tickets for.
 
 Read any linked ADR, code exploration, or feature plan documents to understand the scope, architecture decisions, and implementation approach.
 

@@ -1,10 +1,10 @@
 {
   "name": "dag",
   "version": "1.2.0",
-  "description": "Docs Augmented Generation (DAG) — structured docs drive planning, ticketing, implementation, and PRs",
+  "description": "Docs Augmented Generation (DAG) — structured documentation conventions for AI generation",
   "author": {
     "name": "Matthew Baquerizo",
     "email": "matthew.baquerizo@pm.me"
   },
-  "keywords": ["dag", "feature-workflow", "adr", "tickets", "planning"]
+  "keywords": ["dag", "adr", "tickets", "documentation", "ai-generation"]
 }
