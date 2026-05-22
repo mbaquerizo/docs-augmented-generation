@@ -1,13 +1,11 @@
 # dag
 
-The core DAG pipeline. Plan, break down, implement, commit, and finish —
-with structured documents flowing through every stage.
+Core DAG plugin — plan features, break into tickets, publish documentation.
 
 ## Prerequisites
 
 - An issue-tracking adapter configured in `.dag/config.json`
 - A documentation adapter configured in `.dag/config.json`
-- `gh` CLI installed and authenticated (for finish-work)
 
 ## Skills
 
@@ -16,22 +14,12 @@ with structured documents flowing through every stage.
 | plan-feature | `/dag:plan-feature` | ADR + code exploration |
 | create-tickets | `/dag:create-tickets` | Ticket hierarchy |
 | dag-publish | (invoked by other skills) | Publishing dispatcher — routes to the configured adapter |
-| start-work | (invoked by subagent) | Loads ticket, implements |
-| tdd | (invoked by start-work) | Test-driven development |
-| commit | (invoked by finish-work) | Stages and commits |
-| finish-work | `/dag:finish-work` | PR creation |
 
 ## Agents
 
 | Agent | Description |
 |-------|-------------|
 | code-exploration | Read-only subagent called by plan-feature |
-
-## Pipeline flow
-
-```
-plan-feature → create-tickets → start-work → commit → finish-work
-```
 
 ## Adapters
 
