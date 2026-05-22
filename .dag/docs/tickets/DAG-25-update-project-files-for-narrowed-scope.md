@@ -1,7 +1,7 @@
 ---
 id: DAG-25
 issueType: story
-status: open
+status: done
 tags:
   - dag
   - scope

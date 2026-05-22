@@ -15,7 +15,7 @@ This project uses **gitmoji** for commit messages. Every commit follows this for
 ```
 
 - **gitmoji** — a Unicode emoji expressing the type of change (see the [full reference](plugins/dag/skills/commit/gitmoji.md))
-- **scope** — optional noun describing the affected area in parentheses (e.g. `dag`, `shape-up`, `pair-programming`, `config`)
+- **scope** — optional noun describing the affected area in parentheses (e.g. `dag`, `shape-up`, `config`)
 - **description** — brief summary in imperative present tense, capitalized
 
 Examples from this repository:
@@ -109,7 +109,7 @@ This project uses [Semantic Versioning](https://semver.org/). The marketplace bu
 | Marketplace (root) | 1.0.0 | Bump when the bundle ships a new set of plugin versions |
 | dag | 1.0.0 | Bump per-plugin when its API or behavior changes |
 | shape-up | 1.0.0 | Bump per-plugin independently of other packages |
-| pair-programming | 0.1.0 | Pre-1.0: anything may change; changelog still tracks every bump |
+
 
 Bumping one plugin does **not** force a marketplace bump, and vice versa.
 
