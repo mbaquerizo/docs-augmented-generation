@@ -1,5 +1,5 @@
 ---
-status: proposed
+status: rejected
 date: 2026-05-17
 tags:
   - dag
@@ -7,6 +7,12 @@ tags:
   - epic
   - workflow
 ---
+
+> **Rejected** — This ADR proposed parallel subagent execution and stacked PRs
+> for epic orchestration. Per [ADR: Narrow scope to documentation
+> conventions](../../2026-05-22-pivot-to-docs-input/2026-05-22-narrow-scope-to-docs-input.md),
+> DAG no longer owns execution workflow. The epic-orchestration direction is
+> superseded by the docs-input scope.
 
 # ADR: Epic orchestration with parallel subagents and stacked PRs
 

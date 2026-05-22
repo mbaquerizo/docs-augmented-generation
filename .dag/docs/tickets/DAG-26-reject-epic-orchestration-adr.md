@@ -1,7 +1,7 @@
 ---
 id: DAG-26
 issueType: task
-status: open
+status: done
 tags:
   - dag
   - documentation
