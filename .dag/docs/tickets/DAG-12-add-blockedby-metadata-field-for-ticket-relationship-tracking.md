@@ -1,7 +1,7 @@
 ---
 id: DAG-12
 issueType: task
-status: in-review
+status: done
 tags:
   - dag
   - infrastructure

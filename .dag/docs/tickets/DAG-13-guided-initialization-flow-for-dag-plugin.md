@@ -6,6 +6,7 @@ tags:
   - dag
   - onboarding
   - developer-experience
+children: [DAG-14, DAG-15]
 ---
 
 # Epic: Guided initialization flow for DAG plugin

@@ -6,6 +6,7 @@ tags:
   - dag
   - documentation
   - onboarding
+parent: DAG-13
 ---
 
 # Task: Update documentation references from .planning/ to .dag/docs/

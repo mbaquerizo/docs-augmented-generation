@@ -6,6 +6,7 @@ tags:
   - dag
   - onboarding
   - developer-experience
+parent: DAG-13
 ---
 
 # Story: Create interactive init script for scaffolding .dag/config.json

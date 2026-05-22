@@ -1,13 +1,13 @@
 ---
 id: DAG-16
 issueType: epic
-status: open
+status: will-not-do
 tags:
   - dag
   - orchestration
   - epic
   - workflow
-children: [DAG-17, DAG-18, DAG-19, DAG-20, DAG-21, DAG-22, DAG-23]
+children: [DAG-20, DAG-21, DAG-22, DAG-23]
 ---
 
 # Epic orchestration with parallel subagents and stacked PRs
