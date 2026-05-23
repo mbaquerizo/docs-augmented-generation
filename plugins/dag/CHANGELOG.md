@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.0.0] - 2026-05-23
+
+### Added
+
+- `blockedBy` field to ticket metadata and epic archetype template [ae02a5c](https://github.com/mbaquerizo/docs-augmented-generation/commit/ae02a5c)
+- `children` field to epic archetype template [dac62ed](https://github.com/mbaquerizo/docs-augmented-generation/commit/dac62ed)
+- Adapter conventions reference doc for dag-publish [80c9e6e](https://github.com/mbaquerizo/docs-augmented-generation/commit/80c9e6e)
+- `parent` field wiring through local issue-tracking adapter [0920ea3](https://github.com/mbaquerizo/docs-augmented-generation/commit/0920ea3)
+- Ticket relationship publishing through issue-tracking adapter [d0dec06](https://github.com/mbaquerizo/docs-augmented-generation/commit/d0dec06)
+
+### Changed
+
+- Replaced `.planning` references with `.dag/docs` in start-work and finish-work skills [b66e8c7](https://github.com/mbaquerizo/docs-augmented-generation/commit/b66e8c7)
+
+### **Breaking:**
+
+- Narrowed scope to documentation conventions — removed execution pipeline (start-work, tdd, commit, finish-work) from plugin description, keywords, and README. Plugin is now positioned for documentation planning and publishing only. [e6a54b6](https://github.com/mbaquerizo/docs-augmented-generation/commit/e6a54b6)
+
 ## [1.2.0] - 2026-05-16
 
 ### Changed

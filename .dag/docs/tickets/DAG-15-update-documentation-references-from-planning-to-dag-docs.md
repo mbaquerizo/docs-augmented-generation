@@ -19,7 +19,6 @@ The repo's `AGENTS.md` references `.planning/` paths (e.g. `.planning/docs/`, `.
 
 1. `AGENTS.md` no longer references `.planning/` paths except where historically relevant
 2. Any other documentation files referencing `.planning/` are updated or flagged
-3. The README mentions the init script as the recommended setup path
 
 ## Related docs
 
