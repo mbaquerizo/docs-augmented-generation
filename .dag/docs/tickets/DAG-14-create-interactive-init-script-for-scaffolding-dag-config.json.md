@@ -1,7 +1,7 @@
 ---
 id: DAG-14
 issueType: story
-status: in-progress
+status: done
 tags:
   - dag
   - onboarding
