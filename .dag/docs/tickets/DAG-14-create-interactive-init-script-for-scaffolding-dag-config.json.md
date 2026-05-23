@@ -1,7 +1,7 @@
 ---
 id: DAG-14
 issueType: story
-status: open
+status: in-progress
 tags:
   - dag
   - onboarding
@@ -27,6 +27,7 @@ As a new DAG plugin user, I want to run a single command that interactively scaf
 8. On confirm, invokes adapter-specific `post_write` hook. For `local` adapter: creates `.dag/docs/adr/`, `.dag/docs/pitches/`, `.dag/docs/tickets/` directories with `.gitkeep` files
 9. On cancel or error, exits with no side effects
 10. Exit codes: 0 (success), 1 (user cancelled), 2 (error)
+11. README mentions the init script as the recommended setup path (under Quickstart, replace the "Edit config manually" step)
 
 ## Scenarios
 
