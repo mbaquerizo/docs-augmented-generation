@@ -12,6 +12,7 @@ A reference for choosing the right ticket type when breaking down feature work. 
 | `tags` | no | List of labels for categorization |
 | `parent` | no | Parent epic ID or grouping identifier |
 | `blockedBy` | no | List of ticket IDs that block this ticket (e.g. `["DAG-2"]`) |
+| `children` | no | List of child ticket IDs (epic only, e.g. `["DAG-3", "DAG-4"]`) |
 
 ## Archetypes
 
@@ -34,6 +35,7 @@ status: open
 tags:
   - area
 blockedBy: []
+children: []
 ---
 
 # {Epic Title}

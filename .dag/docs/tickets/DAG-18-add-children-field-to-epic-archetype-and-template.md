@@ -1,7 +1,7 @@
 ---
 id: DAG-18
 issueType: task
-status: open
+status: done
 tags:
   - dag
   - infrastructure
