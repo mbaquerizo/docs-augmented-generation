@@ -1,6 +1,6 @@
 {
   "name": "dag",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "Docs Augmented Generation (DAG) — structured documentation conventions for AI generation",
   "author": {
     "name": "Matthew Baquerizo",

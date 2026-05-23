@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.0.0] - 2026-05-23
+
+### Added
+
+- MIT license [8ccf7cc](https://github.com/mbaquerizo/docs-augmented-generation/commit/8ccf7cc)
+
+### Changed
+
+- dag plugin (2.0.0) — scope narrowed to documentation conventions; execution pipeline removed from plugin positioning
+- shape-up plugin — description and README updated to reflect new dag scope
+
+### Removed
+
+- pair-programming plugin — plugin directory deleted; removed from marketplace entry
+
 ## [1.0.0] - 2026-05-15
 
 _First marketplace release._

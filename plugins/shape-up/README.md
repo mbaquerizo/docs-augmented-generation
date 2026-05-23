@@ -19,4 +19,4 @@ Turn feature ideas or meeting transcripts into structured Shape Up pitches. Each
 
 ## Related
 
-Pitches produced by this plugin can be broken into tickets using the feature-workflow plugin's `/create-tickets` skill.
+Pitches produced by this plugin can be broken into tickets using the dag plugin's `/dag:create-tickets` skill.
