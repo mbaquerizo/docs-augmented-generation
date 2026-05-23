@@ -58,35 +58,21 @@ cd docs-augmented-generation
 
 Each adapter has a `type` field that selects the backend. The built-in `local` adapter writes to the filesystem at the paths you specify.
 
-Edit `.dag/config.json`:
+Run the init script to scaffold `.dag/config.json` interactively:
 
-```json
-{
-  "adapters": {
-    "documentation": {
-      "type": "local",
-      "config": {
-        "adrPath": "./docs/adr"
-      }
-    },
-    "issue-tracking": {
-      "type": "local",
-      "config": {
-        "project": "PROJ",
-        "ticketPath": "./docs/tickets"
-      }
-    }
-  }
-}
+```bash
+bash plugins/dag/scripts/dag-init.sh
 ```
 
-Fields for the `local` adapter:
+The script prompts for paths with sensible defaults and writes the config atomically.
 
-| Field | Meaning |
-|-------|---------|
-| `adrPath` | Where ADRs and code explorations land. Each gets a date-prefixed filename like `2026-05-14-add-auth.md`. |
-| `project` | Ticket ID prefix used by the local adapter (produces IDs like `PROJ-1`). |
-| `ticketPath` | Path to the ticket file directory. |
+Fields for the `local` adapter (defaults shown):
+
+| Field | Meaning | Default |
+|-------|---------|---------|
+| `adrPath` | Where ADRs and code explorations land. Each gets a date-prefixed filename like `2026-05-14-add-auth.md`. | `./.dag/docs/adr` |
+| `project` | Ticket ID prefix used by the local adapter (produces IDs like `PROJ-1`). Uppercased, max 10 chars. | `PROJ` |
+| `ticketPath` | Path to the ticket file directory. | `./.dag/docs/tickets` |
 
 All paths are relative to the project root. The `parent` field in published documents creates subdirectories for grouping related docs.
 
