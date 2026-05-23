@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -o nounset
 set -o errexit
+set -o pipefail
 
 # --- Terminal formatting ---
 
@@ -119,7 +120,7 @@ menu_select() {
   draw_menu
 
   while true; do
-    read -s -n1 key
+    read -s -n1 key || true
     case "$key" in
       $'\e')
         read -s -n2 extra 2>/dev/null || true
@@ -247,7 +248,19 @@ sanitize_project() {
   printf "%s" "$cleaned" | cut -c1-10
 }
 
+json_escape() {
+  local s="$1"
+  s="${s//\\/\\\\}"
+  s="${s//\"/\\\"}"
+  printf "%s" "$s"
+}
+
 generate_config_json() {
+  local escaped_adrPath escaped_ticketPath escaped_project
+  escaped_adrPath="$(json_escape "$adrPath")"
+  escaped_ticketPath="$(json_escape "$ticketPath")"
+  escaped_project="$(json_escape "$project")"
+
   case "$ADAPTER_TYPE" in
     local)
       cat <<EOF
@@ -256,14 +269,14 @@ generate_config_json() {
     "documentation": {
       "type": "local",
       "config": {
-        "adrPath": "${adrPath}"
+        "adrPath": "${escaped_adrPath}"
       }
     },
     "issue-tracking": {
       "type": "local",
       "config": {
-        "project": "${project}",
-        "ticketPath": "${ticketPath}"
+        "project": "${escaped_project}",
+        "ticketPath": "${escaped_ticketPath}"
       }
     }
   }
@@ -311,8 +324,8 @@ post_write() {
 print_summary() {
   screen_header "Done"
   info "Configuration → ${BOLD}${CONFIG_FILE}${RESET}"
-  info "ADRs    → ${BOLD}${adrPath}${RESET}"
-  info "Tickets → ${BOLD}${ticketPath}${RESET}"
+  info "ADRs          → ${BOLD}${adrPath}${RESET}"
+  info "Tickets       → ${BOLD}${ticketPath}${RESET}"
   printf "\n${BOLD}Next step${RESET}:\n"
   printf "  ${BOLD}/dag:plan-feature <your feature description>${RESET}\n"
 }
