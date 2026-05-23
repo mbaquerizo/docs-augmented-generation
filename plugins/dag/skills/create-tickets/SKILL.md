@@ -93,21 +93,33 @@ Allow revisions to the hierarchy, titles, descriptions, or any ticket detail.
 
 On approval, publish each ticket using the dag-publish skill.
 
-The dag-publish skill returns the published path — capture it for each ticket.
+The dag-publish skill returns the published path. Extract the assigned ticket ID from the filename (e.g. `DAG-28` from `DAG-28-add-auth.md`). Capture every assigned ID — you'll need them to wire relationship fields.
 
 1. Read `.dag/config.json` to find the enabled issue-tracking adapter
-2. Publish each ticket individually:
+
+2. **Publish the epic first** — omit `children` since child IDs haven't been assigned yet:
    - `type`: `ticket`
-   - `title`: ticket title
-   - `body`: full ticket description including acceptance criteria, scenarios, technical notes, and links to planning documents. Replace `{model}` in the footer with the current tool name (e.g. "Claude Code", "opencode")
-   - `metadata.issueType`: the archetype (`epic`, `story`, `task`, `bug`, `spike`)
+   - `title`: epic title
+   - `body`: full description including acceptance criteria, scenarios, technical notes, and links to planning documents
+   - `metadata.issueType`: `epic`
    - `metadata.status`: `open`
-   - `metadata.tags`: relevant tags from planning
-   - `metadata.blockedBy`: list of blocking ticket IDs from the draft relationship notes (omit if none)
-   - `metadata.parent`: parent epic ID if the ticket belongs to an epic
-   - `metadata.children`: list of child ticket IDs (epic only, omit otherwise)
-   - Capture the returned path
-3. After all tickets are published, present a summary table:
+   - `metadata.tags`: relevant tags
+   - Capture the returned path and extract the epic's assigned ID
+
+3. **Publish child tickets** in dependency order (tickets that block others first). Dependency order ensures all blocking ticket IDs are already captured:
+   - `type`: `ticket`
+   - `title`: child title
+   - `body`: full description including acceptance criteria, scenarios, technical notes, and links to planning documents. Replace `{model}` in the footer with the current tool name (e.g. "Claude Code", "opencode")
+   - `metadata.issueType`: `story`, `task`, `bug`, or `spike`
+   - `metadata.status`: `open`
+   - `metadata.tags`: relevant tags
+   - `metadata.parent`: the epic's assigned ID
+   - `metadata.blockedBy`: assigned IDs of already-published blockers from the draft relationship notes (omit if none)
+   - Capture the returned path and extract each child's assigned ID
+
+4. **Update the epic** with the complete child list: set `metadata.children` to the list of all assigned child IDs (use the dag-publish skill with the epic's known path)
+
+5. Present a summary table:
    ```
    {ID}  {archetype}  {title}  →  {published path}
    ```

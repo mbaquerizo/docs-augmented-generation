@@ -18,7 +18,8 @@ Reads from `.dag/config.json` under `adapters.issue-tracking.config`:
 | `type` | Unused (all types go to `ticketPath`). Reserved for future use |
 | `title` | File heading (`# {title}`) and slug for filename |
 | `body` | Body content after frontmatter |
-| `parent` | YAML frontmatter field, serialized alongside `id`, `issueType`, `status`, `blockedBy`, and `tags`. Omitted when absent. |
+| `parent` | YAML frontmatter field, serialized alongside `id`, `issueType`, `status`, `blockedBy`, `children`, and `tags`. Omitted when absent. |
+| `children` | YAML frontmatter list field (epic only). Omitted when absent. |
 | `metadata` | Serialized as YAML frontmatter between `---` delimiters. Adapter-specific fields listed below |
 
 ### Adapter-specific metadata fields
@@ -28,6 +29,7 @@ Reads from `.dag/config.json` under `adapters.issue-tracking.config`:
 | `issueType` | yes | Ticket archetype: `epic`, `story`, `task`, `bug`, `spike` |
 | `parent` | no | Parent epic ID or grouping identifier |
 | `blockedBy` | no | List of blocking ticket IDs, serialized as YAML list in frontmatter |
+| `children` | no | List of child ticket IDs (epic only), serialized as YAML list in frontmatter |
 
 ## ID and filename generation
 
@@ -46,7 +48,8 @@ Slugs are generated per the [shared adapter conventions](adapter-conventions.md)
 4. Create parent directories if they don't exist: `mkdir -p "{ticketPath}"`
 5. Populate `id` in metadata
 6. If `parent` is present in the input, add it to metadata before serialization
-7. Write the file in this format:
+7. If `children` is present in the input, add it to metadata before serialization
+8. Write the file in this format:
    ```yaml
    ---
    {metadata serialized as YAML}
@@ -55,7 +58,7 @@ Slugs are generated per the [shared adapter conventions](adapter-conventions.md)
 
    {body}
    ```
-8. Return the output path.
+9. Return the output path.
 
 ## Retrieval instructions
 
