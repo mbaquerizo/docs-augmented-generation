@@ -43,8 +43,6 @@ persist relationship fields.
 ## Stories
 
 - Wire parent field through local issue-tracking adapter (DAG-17)
-- Add children field to epic archetype and template (DAG-18)
-- Wire parent and children into create-tickets publish flow (DAG-19)
 - Support configurable base branch in finish-work (DAG-20)
 - Add draft PR flag to finish-work (DAG-21)
 - Add orchestrator-aware mode to start-work (DAG-22)
