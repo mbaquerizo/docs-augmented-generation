@@ -18,7 +18,7 @@ Small (1-2 weeks). Config scaffolding is a bounded standalone problem. Plugin in
 
 ## Solution Outline
 
-A bash script (`plugins/dag/scripts/dag-init.sh`) that interactively scaffolds `.dag/config.json` and creates the `.planning/` directory structure. Run from the project root; answers a few prompts with sensible defaults; previews the config; writes it atomically with automatic backup of any existing config.
+A bash script (`plugins/dag/scripts/dag-init.sh`) that interactively scaffolds `.dag/config.json` and creates the `.dag/docs/` directory structure. Run from the project root; answers a few prompts with sensible defaults; previews the config; writes it atomically with automatic backup of any existing config.
 
 ## Breadboard
 
@@ -37,7 +37,7 @@ flowchart LR
     I --> J[Preview config]
     J --> K{Confirm?}
     K -->|Yes| L[Write .dag/config.json]
-    L --> M[Create .planning/* dirs + .gitkeep]
+    L --> M[Create .dag/docs/* dirs + .gitkeep]
     M --> N[Done]
     K -->|No| O[Exit]
 ```
@@ -49,14 +49,14 @@ flowchart LR
 | Select adapter | Choose `local` (only option in v1) | Prompt sequence |
 | Prompt sequence | Answer path questions with sensible defaults | Preview |
 | Preview | Show generated JSON, confirm/cancel | Write or Exit |
-| Write | Scaffold config + `.planning/*/` dirs + `.gitkeep` files | Done |
+| Write | Scaffold config + `.dag/docs/*/` dirs + `.gitkeep` files | Done |
 | Done | Print paths + next steps | — |
 
 **Key decisions**:
 - Pure bash script at `plugins/dag/scripts/dag-init.sh` — no slash command, no AI orchestration
-- Interactive prompts with sensible defaults: `adrPath=./.planning/adr`, `pitchPath=./.planning/pitches`, `ticketPath=./.planning/tickets`, project name from `basename $(pwd)`
+- Interactive prompts with sensible defaults: `adrPath=./.dag/docs/adr`, `pitchPath=./.dag/docs/pitches`, `ticketPath=./.dag/docs/tickets`, project name from `basename $(pwd)`
 - If config exists: "An existing config was found at `.dag/config.json`. Overwrite? It will be backed up to `.dag/config.json.bak`. [Y/n]"
-- Creates `.planning/adr/.gitkeep`, `.planning/pitches/.gitkeep`, `.planning/tickets/.gitkeep` so directories are committed
+- Creates `.dag/docs/adr/.gitkeep`, `.dag/docs/pitches/.gitkeep`, `.dag/docs/tickets/.gitkeep` so directories are committed
 - Validates paths are relative and non-empty
 - Idempotent — no partial state (writes to `mktemp` tempfile, moves atomically on confirm)
 - Tool-agnostic — identical behavior for Claude Code and OpenCode

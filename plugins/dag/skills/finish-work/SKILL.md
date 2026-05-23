@@ -75,7 +75,7 @@ Optionally add labels: `ai-authored` or `ai-assisted` if applicable.
 
 Extract the ticket ID from the branch name (e.g. `story/PROJ-4/...` → `PROJ-4`):
 
-1. Read `.dag/config.json` to find `ticketPath` under `adapters.issue-tracking.config` (default: `./.planning/tickets`)
+1. Read `.dag/config.json` to find `ticketPath` under `adapters.issue-tracking.config` (default: `./.dag/docs/tickets`)
 2. Follow the [retrieval instructions](plugins/dag/skills/dag-publish/issue-tracking-local.md) to locate the ticket file by its ID
 3. Change `status: in-progress` to `status: in-review` in the frontmatter
 4. Rewrite the file in place

@@ -29,7 +29,7 @@ Read the ticket from the issue-tracking adapter:
 
 1. Read `.dag/config.json` to find the `project` prefix under
    `adapters.issue-tracking.config.project` and the ticket directory under
-   `adapters.issue-tracking.config.ticketPath` (default: `./.planning/tickets`)
+   `adapters.issue-tracking.config.ticketPath` (default: `./.dag/docs/tickets`)
 2. Follow the [retrieval instructions](plugins/dag/skills/dag-publish/issue-tracking-local.md)
    to locate and read the ticket file by its ID
 

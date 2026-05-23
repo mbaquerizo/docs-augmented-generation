@@ -21,13 +21,13 @@ plugins/
   | skills/create-tickets/ticket-archetypes.md
   | skills/dag-publish/contract.md         # Publish contract spec
   | skills/dag-publish/config.schema.json  # Schema for .dag/config.json
-.planning/docs/               # Published ADRs, code explorations
-.planning/tickets/            # Published tickets
+.dag/docs/adr               # Published ADRs, code explorations
+.dag/docs/tickets/            # Published tickets
 ```
 
 ### Key config files
 
-- `.dag/config.json` — required. Configures documentation + issue-tracking adapters. Currently uses `local` adapters writing to `.planning/`.
+- `.dag/config.json` — required. Configures documentation + issue-tracking adapters. Currently uses `local` adapters writing to `.dag/docs/`.
 - Per-plugin `.claude-plugin/plugin.json` — sets name, version, author, keywords.
 
 ## Slash commands vs auto-dispatch
