@@ -25,6 +25,7 @@ ADAPTER_TYPE=""
 adrPath=""
 ticketPath=""
 project=""
+dbPath=""
 
 # --- State ---
 
@@ -184,8 +185,8 @@ print_banner() {
   printf "  ║  ${BOLD}${GREEN}DAG init${RESET}${BOLD}${BLUE} ── Docs Augmented Generation  ║\n"
   printf "  ╚══════════════════════════════════════════════╝\n"
   printf "${RESET}\n"
-  printf "Creates ${BOLD}.dag/config.json${RESET} and document directories\n"
-  printf "for ADRs and tickets.\n\n"
+  printf "Creates ${BOLD}.dag/config.json${RESET} and prepares\n"
+  printf "documentation storage (filesystem or database).\n\n"
   printf "Press ${BOLD}Ctrl+C${RESET} anytime to cancel — no files are\n"
   printf "modified until you confirm.\n\n"
   printf "${BLUE}────────────────────────────────────────────────${RESET}\n"
@@ -209,23 +210,36 @@ check_existing_config() {
 
 screen_adapter() {
   screen_header "Adapter"
-  printf "Choose a documentation adapter. Cloud adapters coming later.\n"
-  menu_select "Adapter type" "local (writes to filesystem)"
-  ADAPTER_TYPE="local"
+  printf "Choose a documentation adapter.\n"
+  if menu_select "Adapter type" "local (writes to filesystem)" "db (SQLite database)"; then
+    ADAPTER_TYPE="local"
+  else
+    ADAPTER_TYPE="db"
+  fi
 }
 
 screen_paths() {
-  screen_header "Documentation storage"
-  printf "ADRs and code explorations will be markdown files.\n\n"
-  menu_select_or_type "Directory for ADRs and explorations" "./${DOCS_DIR}/adr" adrPath
+  if [ "$ADAPTER_TYPE" = "db" ]; then
+    screen_header "Database path"
+    printf "Docs and issues stored in a shared SQLite database.\n\n"
+    menu_select_or_type "Database file path" "./${DOCS_DIR}/dag.db" dbPath
 
-  screen_header "Ticket storage"
-  printf "Tickets will be numbered markdown files (e.g. ${BOLD}PROJ-1-title${RESET}).\n\n"
-  menu_select_or_type "Directory for tickets" "./${DOCS_DIR}/tickets" ticketPath
+    screen_header "Project prefix"
+    printf "Prefix for ticket IDs (e.g. ${BOLD}PROJ-1-title${RESET}). Uppercased, max 10 chars.\n"
+    prompt_project
+  else
+    screen_header "Documentation storage"
+    printf "ADRs and code explorations will be markdown files.\n\n"
+    menu_select_or_type "Directory for ADRs and explorations" "./${DOCS_DIR}/adr" adrPath
 
-  screen_header "Project prefix"
-  printf "Prefix appears in filenames (e.g. ${BOLD}PROJ-1-add-auth${RESET}). Uppercased, max 10 chars.\n"
-  prompt_project
+    screen_header "Ticket storage"
+    printf "Tickets will be numbered markdown files (e.g. ${BOLD}PROJ-1-title${RESET}).\n\n"
+    menu_select_or_type "Directory for tickets" "./${DOCS_DIR}/tickets" ticketPath
+
+    screen_header "Project prefix"
+    printf "Prefix appears in filenames (e.g. ${BOLD}PROJ-1-add-auth${RESET}). Uppercased, max 10 chars.\n"
+    prompt_project
+  fi
 }
 
 prompt_project() {
@@ -256,10 +270,11 @@ json_escape() {
 }
 
 generate_config_json() {
-  local escaped_adrPath escaped_ticketPath escaped_project
+  local escaped_adrPath escaped_ticketPath escaped_project escaped_dbPath
   escaped_adrPath="$(json_escape "$adrPath")"
   escaped_ticketPath="$(json_escape "$ticketPath")"
   escaped_project="$(json_escape "$project")"
+  escaped_dbPath="$(json_escape "$dbPath")"
 
   case "$ADAPTER_TYPE" in
     local)
@@ -277,6 +292,27 @@ generate_config_json() {
       "config": {
         "project": "${escaped_project}",
         "ticketPath": "${escaped_ticketPath}"
+      }
+    }
+  }
+}
+EOF
+      ;;
+    db)
+      cat <<EOF
+{
+  "adapters": {
+    "documentation": {
+      "type": "db",
+      "config": {
+        "dbPath": "${escaped_dbPath}"
+      }
+    },
+    "issue-tracking": {
+      "type": "db",
+      "config": {
+        "project": "${escaped_project}",
+        "dbPath": "${escaped_dbPath}"
       }
     }
   }
@@ -318,14 +354,29 @@ post_write() {
       mkdir -p "$adrPath" "$ticketPath"
       touch "$adrPath/.gitkeep" "$ticketPath/.gitkeep"
       ;;
+    db)
+      local db_dir
+      db_dir="$(dirname "$dbPath")"
+      mkdir -p "$db_dir"
+      if command -v sqlite3 >/dev/null 2>&1 && [ -f "plugins/dag/scripts/db-migrate.sh" ]; then
+        bash plugins/dag/scripts/db-migrate.sh --db "$dbPath" && info "Database initialized"
+      else
+        info "Database path: ${dbPath}"
+        info "Run db-migrate.sh when sqlite3 is available to initialize the database"
+      fi
+      ;;
   esac
 }
 
 print_summary() {
   screen_header "Done"
   info "Configuration → ${BOLD}${CONFIG_FILE}${RESET}"
-  info "ADRs          → ${BOLD}${adrPath}${RESET}"
-  info "Tickets       → ${BOLD}${ticketPath}${RESET}"
+  if [ "$ADAPTER_TYPE" = "db" ]; then
+    info "Database      → ${BOLD}${dbPath}${RESET}"
+  else
+    info "ADRs          → ${BOLD}${adrPath}${RESET}"
+    info "Tickets       → ${BOLD}${ticketPath}${RESET}"
+  fi
   printf "\n${BOLD}Next step${RESET}:\n"
   printf "  ${BOLD}/dag:plan-feature <your feature description>${RESET}\n"
 }
