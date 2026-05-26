@@ -7,41 +7,79 @@
       "properties": {
         "documentation": {
           "type": "object",
-          "properties": {
-            "type": {
-              "type": "string",
-              "enum": ["local"]
-            },
-            "config": {
-              "type": "object",
+          "oneOf": [
+            {
               "properties": {
-                "adrPath": { "type": "string" },
-                "pitchPath": { "type": "string" }
-              }
+                "type": { "const": "local" },
+                "config": {
+                  "type": "object",
+                  "properties": {
+                    "adrPath": { "type": "string" },
+                    "pitchPath": { "type": "string" }
+                  }
+                }
+              },
+              "required": ["type"]
+            },
+            {
+              "properties": {
+                "type": { "const": "db" },
+                "config": {
+                  "type": "object",
+                  "properties": {
+                    "dbPath": {
+                      "type": "string",
+                      "description": "Path to the SQLite database file."
+                    }
+                  },
+                  "required": ["dbPath"]
+                }
+              },
+              "required": ["type"]
             }
-          },
-          "required": ["type"]
+          ]
         },
         "issue-tracking": {
           "type": "object",
-          "properties": {
-            "type": {
-              "type": "string",
-              "enum": ["local"]
-            },
-            "config": {
-              "type": "object",
+          "oneOf": [
+            {
               "properties": {
-                "project": {
-                  "type": "string",
-                  "description": "Issue-tracking project identifier (e.g. Jira project key, Linear team key). Used as the ticket ID prefix."
-                },
-                "ticketPath": { "type": "string" }
+                "type": { "const": "local" },
+                "config": {
+                  "type": "object",
+                  "properties": {
+                    "project": {
+                      "type": "string",
+                      "description": "Issue-tracking project identifier. Used as the ticket ID prefix."
+                    },
+                    "ticketPath": { "type": "string" }
+                  },
+                  "required": ["project"]
+                }
               },
-              "required": ["project"]
+              "required": ["type"]
+            },
+            {
+              "properties": {
+                "type": { "const": "db" },
+                "config": {
+                  "type": "object",
+                  "properties": {
+                    "project": {
+                      "type": "string",
+                      "description": "Issue-tracking project identifier. Used as the ticket ID prefix."
+                    },
+                    "dbPath": {
+                      "type": "string",
+                      "description": "Path to the SQLite database file."
+                    }
+                  },
+                  "required": ["project", "dbPath"]
+                }
+              },
+              "required": ["type"]
             }
-          },
-          "required": ["type"]
+          ]
         }
       }
     }
