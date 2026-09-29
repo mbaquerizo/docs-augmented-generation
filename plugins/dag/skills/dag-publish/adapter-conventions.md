@@ -145,6 +145,7 @@ All three fields are optional. Adapters must not fail when absent.
 |--------------|--------|-----------|----------|
 | Local issue-tracking | YAML frontmatter | YAML frontmatter | YAML frontmatter |
 | Local documentation | Directory nesting | Unused | Unused |
-| Cloud (future) | Issue link or label | Issue dependency link | Issue dependency link |
+| Dagger issue-tracking | Grouping only; hierarchy via issue relations | Issue relation (`blocked_by`) | Issue relation (child links) |
+| Dagger documentation | Grouping only; hierarchy via `parent_id` at publish time | Unused | Unused |
 
 

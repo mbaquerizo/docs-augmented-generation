@@ -93,7 +93,7 @@ Allow revisions to the hierarchy, titles, descriptions, or any ticket detail.
 
 On approval, publish each ticket using the dag-publish skill.
 
-The dag-publish skill returns the published path. Extract the assigned ticket ID from the filename (e.g. `DAG-28` from `DAG-28-add-auth.md`). Capture every assigned ID — you'll need them to wire relationship fields.
+The dag-publish skill returns the published location. Capture the assigned ticket ID from the adapter's return value — file adapters encode it in the filename (e.g. `DAG-28` from `DAG-28-add-auth.md`); service adapters return it as `id`/`displayId` in the response. Capture every assigned ID — you'll need them to wire relationship fields.
 
 1. Read `.dag/config.json` to find the enabled issue-tracking adapter
 
@@ -104,7 +104,7 @@ The dag-publish skill returns the published path. Extract the assigned ticket ID
    - `metadata.issueType`: `epic`
    - `metadata.status`: `open`
    - `metadata.tags`: relevant tags
-   - Capture the returned path and extract the epic's assigned ID
+   - Capture the returned location and extract the epic's assigned ID (see above)
 
 3. **Publish child tickets** in dependency order (tickets that block others first). Dependency order ensures all blocking ticket IDs are already captured:
    - `type`: `ticket`
@@ -115,13 +115,13 @@ The dag-publish skill returns the published path. Extract the assigned ticket ID
    - `metadata.tags`: relevant tags
    - `metadata.parent`: the epic's assigned ID
    - `metadata.blockedBy`: assigned IDs of already-published blockers from the draft relationship notes (omit if none)
-   - Capture the returned path and extract each child's assigned ID
+   - Capture the returned location and extract each child's assigned ID
 
-4. **Update the epic** with the complete child list: set `metadata.children` to the list of all assigned child IDs (use the dag-publish skill with the epic's known path)
+4. **Update the epic** with the complete child list: set `metadata.children` to the list of all assigned child IDs (use the dag-publish skill with the epic's known location — path for file adapters, display ID for service adapters)
 
 5. Present a summary table:
    ```
-   {ID}  {archetype}  {title}  →  {published path}
+    {ID}  {archetype}  {title}  →  {published location}
    ```
 
 ## 6. When you are done

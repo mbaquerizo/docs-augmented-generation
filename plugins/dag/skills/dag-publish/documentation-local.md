@@ -8,14 +8,13 @@ Reads from `.dag/config.json` under `adapters.documentation.config`:
 
 | Field | Required | Default | Description |
 |-------|----------|---------|-------------|
-| `adrPath` | no | `./docs/adr` | Destination directory for ADRs and code explorations |
-| `pitchPath` | no | `./docs/pitches` | Destination directory for Shape Up pitches |
+| `destination` | no | `./docs` | Root directory. ADRs and explorations go to `{destination}/adr`, pitches to `{destination}/pitches` (fixed subdirectories, created as needed) |
 
 ## Contract mapping
 
 | Contract field | Destination |
 |----------------|-------------|
-| `type` | Resolves the output directory: `adr` → `adrPath`, `pitch` → `pitchPath` |
+| `type` | Resolves the output directory: `adr` → `{destination}/adr`, `pitch` → `{destination}/pitches` |
 | `title` | File heading (`# {title}`) and slug for filename |
 | `body` | Body content after frontmatter |
 | `parent` | Appended to the output directory as a subdirectory per the [shared adapter conventions](adapter-conventions.md): `{basePath}/{parent}` |
@@ -33,7 +32,7 @@ Filenames use a date prefix per the [shared adapter conventions](adapter-convent
 
 ## Publish instructions
 
-1. Determine output directory based on `type`: `adr` → `adrPath`, `pitch` → `pitchPath`
+1. Determine output directory based on `type`: `adr` → `{destination}/adr`, `pitch` → `{destination}/pitches`
 2. If `parent` is provided, append it: `{directory}/{parent}`
 3. Generate filename from `title` and `type` (see above)
 4. Construct full output path: `{directory}/{filename}`
@@ -66,7 +65,7 @@ metadata:
     - infrastructure
 ```
 
-Config `adrPath`: `./docs/adr`
+Config `destination`: `./docs`
 
 Output: `./docs/adr/2026-05-14-use-postgresql-for-event-storage.md`
 
@@ -100,7 +99,7 @@ metadata:
   date: 2026-05-14
 ```
 
-Config `adrPath`: `./docs/adr`
+Config `destination`: `./docs`
 
 Output: `./docs/adr/2026-05-14-CE-explore-audit-logging-module.md`
 

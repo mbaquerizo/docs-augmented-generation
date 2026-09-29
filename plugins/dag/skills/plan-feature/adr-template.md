@@ -10,7 +10,7 @@ An Architecture Decision Record documents a significant architectural decision a
 | `date` | yes | Date the ADR was published or last updated (ISO 8601) |
 | `tags` | no | List of labels for categorization |
 
-The documentation adapter generates the filename (sequential numbering + slug). The `type` field in the publish contract is set to `adr`.
+The configured documentation adapter assigns the identifier (filename, or IDs and URL for service adapters). The `type` field in the publish contract is set to `adr`.
 
 ## Sections
 

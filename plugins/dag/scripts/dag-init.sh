@@ -22,8 +22,8 @@ fi
 CONFIG_FILE="$DAG_CONFIG_PATH"
 DOCS_DIR="$DAG_DOCS_DIR"
 ADAPTER_TYPE=""
-adrPath=""
-ticketPath=""
+docsDestination=""
+ticketDestination=""
 project=""
 
 # --- State ---
@@ -216,12 +216,12 @@ screen_adapter() {
 
 screen_paths() {
   screen_header "Documentation storage"
-  printf "ADRs and code explorations will be markdown files.\n\n"
-  menu_select_or_type "Directory for ADRs and explorations" "./${DOCS_DIR}/adr" adrPath
+  printf "ADRs, explorations, and pitches will be markdown files under one directory.\n\n"
+  menu_select_or_type "Directory for docs" "./${DOCS_DIR}" docsDestination
 
   screen_header "Ticket storage"
   printf "Tickets will be numbered markdown files (e.g. ${BOLD}PROJ-1-title${RESET}).\n\n"
-  menu_select_or_type "Directory for tickets" "./${DOCS_DIR}/tickets" ticketPath
+  menu_select_or_type "Directory for tickets" "./${DOCS_DIR}/tickets" ticketDestination
 
   screen_header "Project prefix"
   printf "Prefix appears in filenames (e.g. ${BOLD}PROJ-1-add-auth${RESET}). Uppercased, max 10 chars.\n"
@@ -256,9 +256,9 @@ json_escape() {
 }
 
 generate_config_json() {
-  local escaped_adrPath escaped_ticketPath escaped_project
-  escaped_adrPath="$(json_escape "$adrPath")"
-  escaped_ticketPath="$(json_escape "$ticketPath")"
+  local escaped_docsDestination escaped_ticketDestination escaped_project
+  escaped_docsDestination="$(json_escape "$docsDestination")"
+  escaped_ticketDestination="$(json_escape "$ticketDestination")"
   escaped_project="$(json_escape "$project")"
 
   case "$ADAPTER_TYPE" in
@@ -269,14 +269,14 @@ generate_config_json() {
     "documentation": {
       "type": "local",
       "config": {
-        "adrPath": "${escaped_adrPath}"
+        "destination": "${escaped_docsDestination}"
       }
     },
     "issue-tracking": {
       "type": "local",
       "config": {
         "project": "${escaped_project}",
-        "ticketPath": "${escaped_ticketPath}"
+        "destination": "${escaped_ticketDestination}"
       }
     }
   }
@@ -315,8 +315,8 @@ write_config() {
 post_write() {
   case "$ADAPTER_TYPE" in
     local)
-      mkdir -p "$adrPath" "$ticketPath"
-      touch "$adrPath/.gitkeep" "$ticketPath/.gitkeep"
+      mkdir -p "$docsDestination/adr" "$docsDestination/pitches" "$ticketDestination"
+      touch "$docsDestination/adr/.gitkeep" "$docsDestination/pitches/.gitkeep" "$ticketDestination/.gitkeep"
       ;;
   esac
 }
@@ -324,8 +324,8 @@ post_write() {
 print_summary() {
   screen_header "Done"
   info "Configuration → ${BOLD}${CONFIG_FILE}${RESET}"
-  info "ADRs          → ${BOLD}${adrPath}${RESET}"
-  info "Tickets       → ${BOLD}${ticketPath}${RESET}"
+  info "Docs          → ${BOLD}${docsDestination}${RESET}"
+  info "Tickets       → ${BOLD}${ticketDestination}${RESET}"
   printf "\n${BOLD}Next step${RESET}:\n"
   printf "  ${BOLD}/dag:plan-feature <your feature description>${RESET}\n"
 }

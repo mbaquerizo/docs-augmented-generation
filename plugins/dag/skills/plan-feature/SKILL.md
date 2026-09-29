@@ -68,21 +68,21 @@ Ask for approval before publishing. Allow revisions.
 
 Publish using the dag-publish skill with a shared `parent` value so both documents are grouped together.
 
-The dag-publish skill returns the published path — capture it for each document.
+The dag-publish skill returns the published location — capture it for each document.
 
 1. Determine a parent identifier: `{timestamp}-{feature-slug}` (e.g. `2026-05-14-add-user-auth`)
 2. Publish the code exploration doc first:
    - `type`: `adr`, `title`: exploration doc title, `body`: findings
    - `parent`: the feature identifier
    - `metadata.docType`: `"code-exploration"`
-   - Capture the returned path
-3. Update the ADR body with the published code exploration path
+   - Capture the returned location
+3. Update the ADR body with the published code exploration location
 4. Publish the ADR:
    - `type`: `adr`, `title`: ADR title, `body`: full ADR with link
    - `parent`: the same feature identifier
    - (no `docType` — defaults to ADR naming)
-   - Capture the returned path
-5. Report both published paths to the user
+   - Capture the returned location
+5. Report both published locations to the user
 
 ## 8. When you are done
 

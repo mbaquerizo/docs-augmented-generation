@@ -25,26 +25,31 @@ the model cannot perform it.
 Accept a ticket ID or feature description from arguments ($ARGUMENTS).
 If no ticket ID is provided, ask which ticket to work on.
 
-Read the ticket from the issue-tracking adapter:
+Read the ticket from the configured issue-tracking adapter:
 
-1. Read `.dag/config.json` to find the `project` prefix under
-   `adapters.issue-tracking.config.project` and the ticket directory under
-   `adapters.issue-tracking.config.ticketPath` (default: `./.dag/docs/tickets`)
-2. Follow the [retrieval instructions](plugins/dag/skills/dag-publish/issue-tracking-local.md)
-   to locate and read the ticket file by its ID
+1. Read `.dag/config.json` to find the adapter `type` under
+   `adapters.issue-tracking` (e.g. `local`, `dagger`). The shared
+   config fields are `destination` (where tickets live) and `project`
+   (project scope, adapter-interpreted) — see the adapter's doc for
+   how it interprets them.
+2. Follow the retrieval instructions in
+   `plugins/dag/skills/dag-publish/issue-tracking-{type}.md` (with
+   `{type}` replaced by the configured adapter type) to locate and
+   read the ticket by its ID
 
 For context on the ticket data model, see the
 [publish contract](plugins/dag/skills/dag-publish/contract.md).
 
 ### 3. Update ticket status
 
-Update the ticket's status from `open` to `in-progress` using the
-dag-publish skill:
+Update the ticket's status from `open` to `in-progress` through the
+configured issue-tracking adapter (see its update instructions —
+file adapters rewrite the file in place; service adapters use their
+update tool or endpoint):
 
-1. Read the current ticket file
-2. Change `status: open` to `status: in-progress`
-3. Rewrite the file in place
-4. Report the status change to the user
+1. Locate the ticket (see Input above)
+2. Change its status from `open` to `in-progress`
+3. Report the status change to the user
 
 ### 4. Load context
 

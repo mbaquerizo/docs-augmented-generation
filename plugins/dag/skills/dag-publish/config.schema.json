@@ -11,29 +11,21 @@
             {
               "properties": {
                 "type": { "const": "local" },
-                "config": {
-                  "type": "object",
-                  "properties": {
-                    "adrPath": { "type": "string" },
-                    "pitchPath": { "type": "string" }
-                  }
-                }
+                "config": { "$ref": "#/$defs/documentationConfig" }
               },
               "required": ["type"]
             },
             {
               "properties": {
                 "type": { "const": "db" },
-                "config": {
-                  "type": "object",
-                  "properties": {
-                    "dbPath": {
-                      "type": "string",
-                      "description": "Path to the SQLite database file."
-                    }
-                  },
-                  "required": ["dbPath"]
-                }
+                "config": { "$ref": "#/$defs/documentationConfig" }
+              },
+              "required": ["type"]
+            },
+            {
+              "properties": {
+                "type": { "const": "dagger" },
+                "config": { "$ref": "#/$defs/documentationConfig" }
               },
               "required": ["type"]
             }
@@ -45,37 +37,21 @@
             {
               "properties": {
                 "type": { "const": "local" },
-                "config": {
-                  "type": "object",
-                  "properties": {
-                    "project": {
-                      "type": "string",
-                      "description": "Issue-tracking project identifier. Used as the ticket ID prefix."
-                    },
-                    "ticketPath": { "type": "string" }
-                  },
-                  "required": ["project"]
-                }
+                "config": { "$ref": "#/$defs/issueTrackingConfig" }
               },
               "required": ["type"]
             },
             {
               "properties": {
                 "type": { "const": "db" },
-                "config": {
-                  "type": "object",
-                  "properties": {
-                    "project": {
-                      "type": "string",
-                      "description": "Issue-tracking project identifier. Used as the ticket ID prefix."
-                    },
-                    "dbPath": {
-                      "type": "string",
-                      "description": "Path to the SQLite database file."
-                    }
-                  },
-                  "required": ["project", "dbPath"]
-                }
+                "config": { "$ref": "#/$defs/issueTrackingConfig" }
+              },
+              "required": ["type"]
+            },
+            {
+              "properties": {
+                "type": { "const": "dagger" },
+                "config": { "$ref": "#/$defs/issueTrackingConfig" }
               },
               "required": ["type"]
             }
@@ -84,5 +60,35 @@
       }
     }
   },
-  "required": ["adapters"]
+  "required": ["adapters"],
+  "$defs": {
+    "documentationConfig": {
+      "type": "object",
+      "properties": {
+        "destination": {
+          "type": "string",
+          "description": "Root destination. File adapters: directory path containing the adr/pitch subdirectories. Dagger: base URL (e.g. https://api.dagger.dev)."
+        },
+        "project": {
+          "type": ["string", "integer"],
+          "description": "Project scope, adapter-interpreted. Local: unused. Dagger: internal project ID or slug (required by the dagger adapter; slugs resolve server-side once supported)."
+        }
+      },
+      "required": ["destination"]
+    },
+    "issueTrackingConfig": {
+      "type": "object",
+      "properties": {
+        "destination": {
+          "type": "string",
+          "description": "Where tickets live. File adapters: ticket directory (replaces ticketPath). Dagger: base URL of the tracker."
+        },
+        "project": {
+          "type": ["string", "integer"],
+          "description": "Project scope, adapter-interpreted. File adapters: display prefix used in ticket IDs (e.g. DGR in DGR-42). Dagger: internal project ID or slug."
+        }
+      },
+      "required": ["destination", "project"]
+    }
+  }
 }
