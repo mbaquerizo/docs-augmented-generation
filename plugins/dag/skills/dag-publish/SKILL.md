@@ -40,13 +40,15 @@ updating tickets.
 
 ### External adapters (any other type)
 
-If the type is not `"local"`, load the matching adapter skill by name:
-- documentation type `"jira"` → load `adapter-documentation-jira` skill
-- issue-tracking type `"github"` → load `adapter-issue-tracking-github` skill
-
-The adapter skill implements the contract from `contract.md` for that
-specific tool.
+If the type is not `"local"`, resolve the adapter doc by interpolation:
+`documentation-{type}.md` (this directory) for ADRs, code explorations,
+and pitches; `issue-tracking-{type}.md` for tickets — with `{type}`
+replaced by the configured adapter type (e.g. type `"dagger"` →
+`documentation-dagger.md`). The adapter doc implements the contract
+from `contract.md` for that specific destination. If no matching doc
+exists, fail naming the expected filename.
 
 ## After publishing
 
-Capture the returned path and report it to the user.
+Capture the returned location and report it to the user (a filesystem
+path for file adapters; IDs and URL for service adapters).

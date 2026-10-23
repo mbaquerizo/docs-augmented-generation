@@ -9,13 +9,13 @@ Reads from `.dag/config.json` under `adapters.issue-tracking.config`:
 | Field | Required | Default | Description |
 |-------|----------|---------|-------------|
 | `project` | yes | — | Issue-tracking project identifier. Used as the ticket ID prefix (e.g. `UI` produces IDs like `UI-42`) |
-| `ticketPath` | no | `./docs/tickets` | Destination directory for tickets |
+| `destination` | no | `./docs/tickets` | Ticket directory |
 
 ## Contract mapping
 
 | Contract field | Destination |
 |----------------|-------------|
-| `type` | Unused (all types go to `ticketPath`). Reserved for future use |
+| `type` | Unused (all types go to `destination`). Reserved for future use |
 | `title` | File heading (`# {title}`) and slug for filename |
 | `body` | Body content after frontmatter |
 | `parent` | YAML frontmatter field, serialized alongside `id`, `issueType`, `status`, `blockedBy`, `children`, and `tags`. Omitted when absent. |
@@ -35,7 +35,7 @@ Reads from `.dag/config.json` under `adapters.issue-tracking.config`:
 
 Slugs are generated per the [shared adapter conventions](adapter-conventions.md).
 
-1. Scan `ticketPath` for existing files matching `{project}-\d+-*.md`
+1. Scan `destination` for existing files matching `{project}-\d+-*.md`
 2. Find the highest existing ID number, increment by 1 (start at 1 if none)
 3. Set `id` in metadata to `{project}-{n}`
 4. Generate filename: `{project}-{n}-{slug}.md`
@@ -44,8 +44,8 @@ Slugs are generated per the [shared adapter conventions](adapter-conventions.md)
 
 1. Determine next ID (see above)
 2. Generate filename from `project`, ID, and `title` slug
-3. Construct full output path: `{ticketPath}/{filename}`
-4. Create parent directories if they don't exist: `mkdir -p "{ticketPath}"`
+3. Construct full output path: `{destination}/{filename}`
+4. Create parent directories if they don't exist: `mkdir -p "{destination}"`
 5. Populate `id` in metadata
 6. If `parent` is present in the input, add it to metadata before serialization
 7. If `children` is present in the input, add it to metadata before serialization
@@ -64,8 +64,8 @@ Slugs are generated per the [shared adapter conventions](adapter-conventions.md)
 
 To look up an existing ticket by ID:
 
-1. Read `.dag/config.json` → `adapters.issue-tracking.config.project` (prefix) and `ticketPath` (directory)
-2. Scan `ticketPath` for `.md` files whose YAML frontmatter `id` field matches the requested ID (e.g. `DAG-11` matches `id: DAG-11`)
+1. Read `.dag/config.json` → `adapters.issue-tracking.config.project` (prefix) and `destination` (directory)
+2. Scan `destination` for `.md` files whose YAML frontmatter `id` field matches the requested ID (e.g. `DAG-11` matches `id: DAG-11`)
 3. Return the matched file path
 
 The filename pattern is `{project}-{number}-{slug}.md`, but scanning frontmatter is the authoritative match — filenames can change on rename.
@@ -91,7 +91,7 @@ metadata:
 ```
 
 Config `project`: `UI`
-Config `ticketPath`: `./docs/tickets`
+Config `destination`: `./docs/tickets`
 Existing files: `./docs/tickets/UI-1-initial-setup.md`, `./docs/tickets/UI-2-design-system.md`
 
 ID generated: 3
